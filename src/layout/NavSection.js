@@ -29,7 +29,7 @@ function NavSubItem({ item, match }) {
         height: 36,
         borderRadius: 2,
         textTransform: "capitalize",
-        color: isChildActive ? "green" : "",
+        color: isChildActive ? "primary.main" : "",
       }}
     >
       <ListItemIcon>
@@ -47,7 +47,7 @@ function NavSubItem({ item, match }) {
               width: 4,
               height: 4,
               borderRadius: "50%",
-              bgcolor: isChildActive ? "green" : "text.disabled",
+              bgcolor: isChildActive ? "primary.main" : "text.disabled",
               transform: isChildActive ? "scale(2)" : "scale(1)",
               transition: "0.2s",
             }}
@@ -78,11 +78,11 @@ function NavItem({ item, match }) {
             height: 48,
             borderRadius: 2,
             textTransform: "capitalize",
-            color: isRootActive ? "green" : "",
+            color: isRootActive ? "primary.main" : "",
           }}
           onClick={handleOpen}
         >
-          <ListItemIcon sx={{ color: isRootActive ? "green" : "" }}>
+          <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
             {icon}
           </ListItemIcon>
           <ListItemText primary={title}></ListItemText>
@@ -111,10 +111,10 @@ function NavItem({ item, match }) {
         height: 48,
         borderRadius: 2,
         textTransform: "capitalize",
-        color: isRootActive ? "green" : "",
+        color: isRootActive ? "primary.main" : "",
       }}
     >
-      <ListItemIcon sx={{ color: isRootActive ? "green" : "" }}>
+      <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
         {icon}
       </ListItemIcon>
       <ListItemText primary={title}></ListItemText>

@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 
 function ListItemAction() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,6 +22,10 @@ function ListItemAction() {
         <MoreVertIcon></MoreVertIcon>
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleClose} disableRipple dense>
+          <PendingActionsIcon sx={{ mr: 2 }} />
+          Đặt lịch
+        </MenuItem>
         <MenuItem onClick={handleClose} disableRipple dense>
           <EditIcon sx={{ mr: 2 }} />
           Xem & Chỉnh sửa

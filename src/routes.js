@@ -6,11 +6,11 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import WorkSchedule from "./pages/workSchedule/WorkSchedule";
 import AppointmentSchedule from "./pages/appointmentSchedule/AppointmentSchedule";
 import DoctorList from "./pages/doctor/DoctorList/DoctorList";
-import Patients from "./pages/patient/Patients";
 import Specialty from "./pages/specialty/Specialty";
 import Medicines from "./pages/medicine/Medicines";
 import Subclinical from "./pages/subclinical/Subclinical";
 import Article from "./pages/article/Article";
+import PatientList from "./pages/patient/PatientList/PatientList";
 
 export default function Router() {
   return useRoutes([
@@ -65,7 +65,7 @@ export default function Router() {
           children: [
             {
               path: "danh-sach",
-              element: <Patients />,
+              element: <PatientList />,
             },
             {
               path: "tao-moi",
