@@ -39,7 +39,7 @@ const createShadow = (color) => {
 
 const shadows = createShadow(LIGHT_MODE);
 
-const borderRadius = 8
+const borderRadius = 8;
 
 const customTheme = createTheme({
   shape: { borderRadius: borderRadius },
@@ -50,8 +50,7 @@ const customTheme = createTheme({
       textTransform: "capitalize",
     },
   },
-  components: {
-  },
+  components: {},
 });
 
 export default customTheme;
