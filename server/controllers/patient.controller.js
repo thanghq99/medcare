@@ -60,7 +60,7 @@ const updatePatient = async (req, res, next) => {
 /** Controller to delete a single patient */
 const deletePatient = async (req, res, next) => {
   try {
-    await PatientService.updatePatient(req.params.id);
+    await PatientService.deletePatient(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],

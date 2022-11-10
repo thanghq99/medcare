@@ -9,8 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Account.hasOne(models.Staff);
-      Account.hasOne(models.Patient);
+      Account.hasOne(models.Staff, {
+        as: "staffDetails",
+        foreignKey: "account_id",
+        onDelete: "CASCADE",
+      });
+      Account.hasOne(models.Patient, {
+        as: "patientDetails",
+        foreignKey: "account_id",
+        onDelete: "CASCADE",
+      });
     }
   }
   Account.init(
@@ -55,7 +63,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Account",
       tableName: "account",
-      paranoid: true,
     }
   );
   return Account;

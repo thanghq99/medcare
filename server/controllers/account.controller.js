@@ -60,7 +60,7 @@ const updateAccount = async (req, res, next) => {
 /** Controller to delete a single account */
 const deleteAccount = async (req, res, next) => {
   try {
-    await AccountService.updateAccount(req.params.id);
+    await AccountService.deleteAccount(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],

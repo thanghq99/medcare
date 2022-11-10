@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Staff.belongsTo(models.Account);
+      Staff.belongsTo(models.Account, {
+        as: "account",
+        foreignKey: "account_id",
+        onDelete: "CASCADE",
+      });
       Staff.belongsTo(models.Specialty);
       Staff.hasMany(models.Record);
       Staff.hasMany(models.Shift);
@@ -35,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Staff",
       tableName: "staff",
-      paranoid: true,
     }
   );
   return Staff;

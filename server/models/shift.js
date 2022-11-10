@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Shift",
       tableName: "shift",
-      paranoid: true,
     }
   );
   return Shift;
