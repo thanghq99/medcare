@@ -7,17 +7,20 @@ const getAllMedicines = async () => {
 };
 
 //create new medicine
-const newMedicine = async (body) => {
-  const data = await Medicine.create(body);
+const newMedicine = async (name) => {
+  const data = await Medicine.create({ name: name });
   return data;
 };
 
 //update single medicine
-const updateMedicine = async (id, body) => {
-  await Medicine.update(body, {
-    where: { id: id },
-  });
-  return body;
+const updateMedicine = async (id, name) => {
+  await Medicine.update(
+    { name: name },
+    {
+      where: { id: id },
+    }
+  );
+  return name;
 };
 
 //delete single medicine

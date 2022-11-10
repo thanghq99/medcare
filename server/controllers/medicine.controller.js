@@ -32,7 +32,7 @@ const getMedicine = async (req, res, next) => {
 /** Controller to create a new Medicine */
 const newMedicine = async (req, res, next) => {
   try {
-    const data = await MedicineService.newMedicine(req.body);
+    const data = await MedicineService.newMedicine(req.body.name);
     res.status(StatusCodes.CREATED).json({
       code: StatusCodes.CREATED,
       data: data,
@@ -46,7 +46,10 @@ const newMedicine = async (req, res, next) => {
 /** Controller to update a Medicine */
 const updateMedicine = async (req, res, next) => {
   try {
-    const data = await MedicineService.updateMedicine(req.params.id, req.body);
+    const data = await MedicineService.updateMedicine(
+      req.params.id,
+      req.body.name
+    );
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
       data: data,
@@ -60,7 +63,7 @@ const updateMedicine = async (req, res, next) => {
 /** Controller to delete a single Medicine */
 const deleteMedicine = async (req, res, next) => {
   try {
-    await MedicineService.updateMedicine(req.params.id);
+    await MedicineService.deleteMedicine(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],

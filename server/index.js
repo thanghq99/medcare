@@ -8,6 +8,7 @@ var corsOptions = {
 };
 
 const appRoute = require("./routes");
+const generalErrorHandling = require("./middlewares/generalErrorHandling");
 
 const app = express();
 app.use(cors(corsOptions));
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/api", appRoute);
+app.use(generalErrorHandling);
 
 app.listen(PORT, async (error) => {
   if (!error) {

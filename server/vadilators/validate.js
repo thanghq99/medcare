@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 
-const middleware = (schema) => (req, res, next) => {
+const validator = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body);
   const valid = error == null;
 
@@ -21,4 +21,4 @@ const middleware = (schema) => (req, res, next) => {
     });
   }
 };
-module.exports = middleware;
+module.exports = validator;
