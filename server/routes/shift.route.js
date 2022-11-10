@@ -6,16 +6,16 @@ const router = express.Router();
 //route to get all shifts
 router.get("", shiftController.getAllShifts);
 
-//route to creat a new shift
+//route to create a new shift
 router.post("", shiftController.newShift);
 
 //route to get a single shift by their shift id
-router.get(":id", shiftController.getShift);
+router.get("/:id", shiftController.getShift);
 
 //route to update a single shift by their shift id
-router.put(":id", shiftController.updateShift);
+router.put("/:id", shiftController.updateShift);
 
 //route to delete a single shift by their shift id
-router.delete(":id", shiftController.deleteShift);
+router.delete("/:id", shiftController.deleteShift);
 
 module.exports = router;

@@ -6,16 +6,16 @@ const router = express.Router();
 //route to get all records
 router.get("", recordController.getAllRecords);
 
-//route to creat a new record
+//route to create a new record
 router.post("", recordController.newRecord);
 
 //route to get a single record by their record id
-router.get(":id", recordController.getRecord);
+router.get("/:id", recordController.getRecord);
 
 //route to update a single record by their record id
-router.put(":id", recordController.updateRecord);
+router.put("/:id", recordController.updateRecord);
 
 //route to delete a single record by their record id
-router.delete(":id", recordController.deleteRecord);
+router.delete("/:id", recordController.deleteRecord);
 
 module.exports = router;
