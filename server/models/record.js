@@ -21,10 +21,17 @@ module.exports = (sequelize, DataTypes) => {
   Record.init(
     {
       status: {
-        type: DataTypes.ENUM,
+        type: DataTypes.STRING,
         allowNull: false,
-        values: ["requested", "accepted", "done", "canceled"],
         defaultValue: "requested",
+        validate: {
+          validOption: (value) => {
+            const enums = ["requested", "accepted", "done", "canceled"];
+            if (!enums.includes(value)) {
+              throw new Error("Not a valid option");
+            }
+          },
+        },
       },
       appointmentDate: {
         type: DataTypes.DATE,
