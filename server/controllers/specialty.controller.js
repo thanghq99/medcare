@@ -32,7 +32,7 @@ const getSpecialty = async (req, res, next) => {
 /** Controller to create a new specialty */
 const newSpecialty = async (req, res, next) => {
   try {
-    const data = await SpecialtyService.newSpecialty(req.body);
+    const data = await SpecialtyService.newSpecialty(req.body.name);
     res.status(StatusCodes.CREATED).json({
       code: StatusCodes.CREATED,
       data: data,
@@ -48,7 +48,7 @@ const updateSpecialty = async (req, res, next) => {
   try {
     const data = await SpecialtyService.updateSpecialty(
       req.params.id,
-      req.body
+      req.body.name
     );
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
@@ -63,7 +63,7 @@ const updateSpecialty = async (req, res, next) => {
 /** Controller to delete a single specialty */
 const deleteSpecialty = async (req, res, next) => {
   try {
-    await SpecialtyService.updateSpecialty(req.params.id);
+    await SpecialtyService.deleteSpecialty(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],

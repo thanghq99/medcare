@@ -1,23 +1,26 @@
 const { Specialty } = require("../models");
 
 //get all specialtys
-const getAllSpecialtys = async () => {
+const getAllSpecialties = async () => {
   const data = await Specialty.findAll();
   return data;
 };
 
 //create new specialty
-const newSpecialty = async (body) => {
-  const data = await Specialty.create(body);
+const newSpecialty = async (name) => {
+  const data = await Specialty.create({ name: name });
   return data;
 };
 
 //update single specialty
-const updateSpecialty = async (id, body) => {
-  await Specialty.update(body, {
-    where: { id: id },
-  });
-  return body;
+const updateSpecialty = async (id, name) => {
+  await Specialty.update(
+    { name: name },
+    {
+      where: { id: id },
+    }
+  );
+  return name;
 };
 
 //delete single specialty
@@ -33,7 +36,7 @@ const getSpecialty = async (id) => {
 };
 
 module.exports = {
-  getAllSpecialtys,
+  getAllSpecialties,
   newSpecialty,
   getSpecialty,
   updateSpecialty,
