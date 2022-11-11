@@ -88,9 +88,21 @@ const findOneByEmailPassword = async (body) => {
 
 //update single account
 const updateAccount = async (id, body) => {
-  await Account.update(body, {
-    where: { id: id },
-  });
+  await Account.update(
+    {
+      firstName: body.firstName,
+      lastName: body.lastName,
+      email: body.email,
+      password: body.password,
+      phoneNumber: body.phoneNumber,
+      dob: body.dob,
+      gender: body.gender,
+      address: body.address,
+    },
+    {
+      where: { id: id },
+    }
+  );
   return body;
 };
 

@@ -8,15 +8,24 @@ const getAllSubclinicals = async () => {
 
 //create new subclinical
 const newSubclinical = async (body) => {
-  const data = await Subclinical.create(body);
+  const data = await Subclinical.create({
+    name: body.name,
+    examinationFee: body.examinationFee,
+  });
   return data;
 };
 
 //update single subclinical
 const updateSubclinical = async (id, body) => {
-  await Subclinical.update(body, {
-    where: { id: id },
-  });
+  await Subclinical.update(
+    {
+      name: body.name,
+      examinationFee: body.examinationFee,
+    },
+    {
+      where: { id: id },
+    }
+  );
   return body;
 };
 
