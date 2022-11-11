@@ -63,7 +63,7 @@ const updateSubclinical = async (req, res, next) => {
 /** Controller to delete a single subclinical */
 const deleteSubclinical = async (req, res, next) => {
   try {
-    await SubclinicalService.updateSubclinical(req.params.id);
+    await SubclinicalService.deleteSubclinical(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],
