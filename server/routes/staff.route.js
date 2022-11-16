@@ -1,10 +1,12 @@
 const express = require("express");
 const staffController = require("../controllers/staff.controller.js");
+const validate = require("../vadilators/validate");
+const { getStaffsSchema } = require("../vadilators/staff.validator");
 
 const router = express.Router();
 
 //route to get all staffs
-router.get("", staffController.getAllStaffs);
+router.get("", validate(getStaffsSchema), staffController.getAllStaffs);
 
 //route to create a new staff
 router.post("", staffController.newStaff);

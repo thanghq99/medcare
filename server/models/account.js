@@ -11,13 +11,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Account.hasOne(models.Staff, {
         as: "staffDetails",
-        foreignKey: "account_id",
+        foreignKey: {
+          name: "accountId",
+          field: "account_id",
+        },
         onDelete: "CASCADE",
+        hooks: true,
       });
       Account.hasOne(models.Patient, {
         as: "patientDetails",
-        foreignKey: "account_id",
+        foreignKey: {
+          name: "accountId",
+          field: "account_id",
+        },
         onDelete: "CASCADE",
+        hooks: true,
       });
     }
   }
@@ -54,6 +62,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: DataTypes.STRING,
       isStaff: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      isDisabled: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

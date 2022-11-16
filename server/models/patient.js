@@ -10,8 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Patient.belongsTo(models.Account, {
         as: "account",
-        foreignKey: "account_id",
+        foreignKey: {
+          name: "accountId",
+          field: "account_id",
+        },
         onDelete: "CASCADE",
+        hooks: true,
       });
       Patient.hasMany(models.Record);
     }

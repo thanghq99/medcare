@@ -10,10 +10,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Staff.belongsTo(models.Account, {
         as: "account",
-        foreignKey: "account_id",
+        foreignKey: {
+          name: "accountId",
+          field: "account_id",
+        },
         onDelete: "CASCADE",
+        hooks: true,
       });
-      Staff.belongsTo(models.Specialty);
+      Staff.belongsTo(models.Specialty, {
+        as: "specialty",
+        foreignKey: {
+          name: "specialtyId",
+          field: "specialty_id",
+        },
+      });
       Staff.hasMany(models.Record);
       Staff.hasMany(models.Shift);
     }
