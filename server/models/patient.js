@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Patient.init(
     {
-      heathHistory: DataTypes.STRING,
+      healthHistory: DataTypes.STRING,
       familyHealthHistory: DataTypes.STRING,
     },
     {

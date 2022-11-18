@@ -1,10 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
+const { sequelize } = require("../models");
 const PatientService = require("../services/patient.service.js");
+const AccountService = require("../services/account.service.js");
 
 /** Controller to get all patients available */
 const getAllPatients = async (req, res, next) => {
   try {
-    const data = await PatientService.getAllPatients();
+    const data = await PatientService.getAllPatients(req.body);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: data,
@@ -59,14 +61,23 @@ const updatePatient = async (req, res, next) => {
 
 /** Controller to delete a single patient */
 const deletePatient = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
   try {
-    await PatientService.deletePatient(req.params.id);
+    const patient = await PatientService.getPatient(req.params.id);
+    const accountId = patient.account.id;
+
+    // 'account hasOne patient' doesnt create on delete cascade on account table
+    // so i will just delete account to automatically delete its patient (child)
+    await AccountService.deleteAccount(accountId);
+
+    await transaction.commit();
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],
       message: "Patient deleted successfully",
     });
   } catch (error) {
+    await transaction.rollback();
     next(error);
   }
 };

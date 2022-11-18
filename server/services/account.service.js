@@ -26,7 +26,7 @@ const newAccount = async (body, transaction) => {
         isAdmin: body.isAdmin,
       },
       patientDetails: {
-        heathHistory: body.heathHistory,
+        healthHistory: body.healthHistory,
         familyHealthHistory: body.familyHealthHistory,
       },
     },

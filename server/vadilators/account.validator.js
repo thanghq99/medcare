@@ -14,7 +14,7 @@ const createAccountSchema = Joi.object({
   degree: Joi.string().required().allow("", null),
   examinationFee: Joi.number().required(),
   isAdmin: Joi.boolean().default(false).required(),
-  heathHistory: Joi.string().allow("", null),
+  healthHistory: Joi.string().allow("", null),
   familyHealthHistory: Joi.string().allow("", null),
 });
 
