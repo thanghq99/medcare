@@ -10,7 +10,7 @@ const medicineRoute = require("./medicine.route.js");
 const subclinicalRoute = require("./subclinical.route.js");
 const specialtyRoute = require("./specialty.route.js");
 const shiftRoute = require("./shift.route.js");
-const storedShiftRoute = require("./storedShift.route.js");
+const shiftAssignmentRoute = require("./shiftAssignment.route.js");
 const authenticationRoute = require("./authentication.route.js");
 
 router.get("/", (req, res) => {
@@ -26,7 +26,7 @@ router.use("/medicine", medicineRoute);
 router.use("/subclinical", subclinicalRoute);
 router.use("/specialty", specialtyRoute);
 router.use("/shift", shiftRoute);
-router.use("/storedShift", storedShiftRoute);
+router.use("/shift-assignment", shiftAssignmentRoute);
 router.use("/authentication", authenticationRoute);
 
 module.exports = router;

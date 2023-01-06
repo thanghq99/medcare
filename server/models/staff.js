@@ -25,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
       Staff.hasMany(models.Record);
-      Staff.hasMany(models.Shift);
+      Staff.belongsToMany(models.Shift, {
+        foreignKey: "staffId",
+        unique: false,
+        through: { model: models.ShiftAssignment, unique: false },
+      });
     }
   }
   Staff.init(

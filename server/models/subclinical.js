@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Subclinical.belongsToMany(models.Record, {
-        through: models.RecordSubclinicals,
+        through: models.RecordSubclinical,
       });
     }
   }

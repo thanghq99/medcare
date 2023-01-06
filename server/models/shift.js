@@ -8,22 +8,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Shift.belongsTo(models.Staff);
+      Shift.belongsToMany(models.Staff, {
+        foreignKey: "shiftId",
+        through: { model: models.ShiftAssignment, unique: false },
+      });
     }
   }
   Shift.init(
     {
       startTime: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       endTime: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      date: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
     },
     {

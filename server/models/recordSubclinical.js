@@ -1,8 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class RecordSubclinicals extends Model {}
-  RecordSubclinicals.init(
+  class RecordSubclinical extends Model {}
+  RecordSubclinical.init(
     {
       currentExaminationFee: {
         type: DataTypes.INTEGER,
@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "RecordSubclinicals",
+      modelName: "RecordSubclinical",
       tableName: "record_subclinical",
     }
   );
-  return RecordSubclinicals;
+  return RecordSubclinical;
 };

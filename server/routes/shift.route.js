@@ -1,5 +1,7 @@
 const express = require("express");
 const shiftController = require("../controllers/shift.controller");
+const validate = require("../vadilators/validate");
+const { shiftSchema } = require("../vadilators/shift.validator");
 
 const router = express.Router();
 
@@ -7,7 +9,7 @@ const router = express.Router();
 router.get("", shiftController.getAllShifts);
 
 //route to create a new shift
-router.post("", shiftController.newShift);
+router.post("", validate(shiftSchema), shiftController.newShift);
 
 //route to get a single shift by their shift id
 router.get("/:id", shiftController.getShift);

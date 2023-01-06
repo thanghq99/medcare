@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "record_medicine",
       });
       Record.belongsToMany(models.Subclinical, {
-        through: models.RecordSubclinicals,
+        through: models.RecordSubclinical,
       });
     }
   }
