@@ -7,7 +7,7 @@ var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 const { defaultDate } = require("../utils/defaultDate");
 
-/** Controller to get all shifts available */
+/** Controller to get all shifts available assignment */
 const getAllShiftAssignments = async (req, res, next) => {
   try {
     const { staffId, shiftId, dateList } = req.body;
@@ -20,28 +20,28 @@ const getAllShiftAssignments = async (req, res, next) => {
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: data,
-      message: "All shifts fetched successfully",
+      message: "All shift assignments fetched successfully",
     });
   } catch (error) {
     next(error);
   }
 };
 
-/** Controller to get a single shift */
+/** Controller to get a single shift assignment */
 const getShiftAssignment = async (req, res, next) => {
   try {
     const data = await ShiftAssignmentService.getShiftAssignment(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: data,
-      message: "ShiftAssignment fetched successfully",
+      message: "Shift assignment fetched successfully",
     });
   } catch (error) {
     next(error);
   }
 };
 
-/** Controller to create new shift(s) */
+/** Controller to create new shift assignment(s) */
 // Select the staff shifts in the date list.
 // Go through each day,
 // If there is no staff shift on that day, assign shift.
@@ -126,7 +126,7 @@ const newShiftAssignment = async (req, res, next) => {
       res.status(StatusCodes.CREATED).json({
         code: StatusCodes.CREATED,
         data: "",
-        message: "ShiftAssignment created successfully",
+        message: "Shift assignment created successfully",
       });
     }
   } catch (error) {
@@ -135,7 +135,7 @@ const newShiftAssignment = async (req, res, next) => {
   }
 };
 
-/** Controller to update a shift */
+/** Controller to update a shift assignment */
 const updateShiftAssignment = async (req, res, next) => {
   try {
     const data = await ShiftAssignmentService.updateShiftAssignment(
@@ -145,21 +145,40 @@ const updateShiftAssignment = async (req, res, next) => {
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
       data: data,
-      message: "ShiftAssignment updated successfully",
+      message: "Shift assignment updated successfully",
     });
   } catch (error) {
     next(error);
   }
 };
 
-/** Controller to delete a single shift */
+/** Controller to delete a single shift assignment */
 const deleteShiftAssignment = async (req, res, next) => {
   try {
     await ShiftAssignmentService.deleteShiftAssignment(req.params.id);
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: [],
-      message: "ShiftAssignment deleted successfully",
+      message: "Shift assignment deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** Controller to delete shift assignments by dates */
+const deleteShiftAssignmentByDates = async (req, res, next) => {
+  try {
+    const { staffId, dateList } = req.body;
+    const utcDateList = dateList.map((date) => dayjs(date).utc().format());
+    await ShiftAssignmentService.deleteShiftAssignmentByDates(
+      staffId,
+      utcDateList
+    );
+    res.status(StatusCodes.OK).json({
+      code: StatusCodes.OK,
+      data: [],
+      message: "Shift assignments deleted successfully",
     });
   } catch (error) {
     next(error);
@@ -172,4 +191,5 @@ module.exports = {
   getShiftAssignment,
   updateShiftAssignment,
   deleteShiftAssignment,
+  deleteShiftAssignmentByDates,
 };

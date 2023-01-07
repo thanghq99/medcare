@@ -4,6 +4,7 @@ const validate = require("../vadilators/validate");
 const {
   getShiftAssignmentSchema,
   postShiftAssignmentSchema,
+  deleteShiftAssignmentsSchema,
 } = require("../vadilators/shiftAssignment.validator");
 
 const router = express.Router();
@@ -27,6 +28,13 @@ router.get("/:id", shiftAssignmentController.getShiftAssignment);
 
 //route to update a single shift assignment by their shift id
 router.put("/:id", shiftAssignmentController.updateShiftAssignment);
+
+//route to delete shift assignments by dates
+router.delete(
+  "/by-dates",
+  validate(deleteShiftAssignmentsSchema),
+  shiftAssignmentController.deleteShiftAssignmentByDates
+);
 
 //route to delete a single shift assignment by their shift id
 router.delete("/:id", shiftAssignmentController.deleteShiftAssignment);

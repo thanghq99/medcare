@@ -59,6 +59,26 @@ const deleteShiftAssignment = async (id) => {
   return "";
 };
 
+//delete shift assignments by dates
+const deleteShiftAssignmentByDates = async (staffId, dateList) => {
+  const staffCondition = () => {
+    if (staffId !== null) {
+      return {
+        staff_id: staffId,
+      };
+    } else return {};
+  };
+  const dateCondition = () => {
+    if (dateList && dateList.length > 0) {
+      return {
+        date: dateList,
+      };
+    } else return {};
+  };
+  await ShiftAssignment.destroy({ where: [staffCondition(), dateCondition()] });
+  return "";
+};
+
 //get single shift assignment
 const getShiftAssignment = async (id) => {
   const data = await ShiftAssignment.findByPk(id, {
@@ -76,4 +96,5 @@ module.exports = {
   getShiftAssignment,
   updateShiftAssignment,
   deleteShiftAssignment,
+  deleteShiftAssignmentByDates,
 };

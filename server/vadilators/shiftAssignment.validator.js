@@ -12,4 +12,13 @@ const postShiftAssignmentSchema = Joi.object({
   dateList: Joi.array().min(1).items(Joi.date().iso()).required(),
 });
 
-module.exports = { getShiftAssignmentSchema, postShiftAssignmentSchema };
+const deleteShiftAssignmentsSchema = Joi.object({
+  staffId: Joi.number().required().allow(null),
+  dateList: Joi.array().min(1).items(Joi.date().iso()).required(),
+});
+
+module.exports = {
+  getShiftAssignmentSchema,
+  postShiftAssignmentSchema,
+  deleteShiftAssignmentsSchema,
+};
