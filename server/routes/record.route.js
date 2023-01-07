@@ -1,5 +1,10 @@
 const express = require("express");
 const recordController = require("../controllers/record.controller");
+const validate = require("../vadilators/validate");
+const {
+  createRecordSchema,
+  updateRecordSchema,
+} = require("../vadilators/record.validator");
 
 const router = express.Router();
 
@@ -7,13 +12,13 @@ const router = express.Router();
 router.get("", recordController.getAllRecords);
 
 //route to create a new record
-router.post("", recordController.newRecord);
+router.post("", validate(createRecordSchema), recordController.newRecord);
 
 //route to get a single record by their record id
 router.get("/:id", recordController.getRecord);
 
 //route to update a single record by their record id
-router.put("/:id", recordController.updateRecord);
+router.put("/:id", validate(updateRecordSchema), recordController.updateRecord);
 
 //route to delete a single record by their record id
 router.delete("/:id", recordController.deleteRecord);

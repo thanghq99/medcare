@@ -1,10 +1,39 @@
 const { StatusCodes } = require("http-status-codes");
 const RecordService = require("../services/record.service.js");
+const dayjs = require("dayjs");
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
 /** Controller to get all records available */
+// recieve: page(offset), pageSize(limit), orderBy(field_name), order(DESC, ASC),
+//          searchPatientName, searchStaffName, searchDate
+// send: totalItems, 'items', totalPages, currentPage
+
 const getAllRecords = async (req, res, next) => {
   try {
-    const data = await RecordService.getAllRecords();
+    const {
+      page,
+      pageSize,
+      orderBy,
+      order,
+      searchPatientName,
+      searchStaffName,
+      searchDate,
+    } = req.body;
+
+    let searchDateUTC;
+    if (searchDate !== "") {
+      searchDateUTC = dayjs(searchDate).toISOString();
+    } else searchDateUTC = "";
+    const data = await RecordService.getAllRecords(
+      page,
+      pageSize,
+      orderBy,
+      order,
+      searchPatientName,
+      searchStaffName,
+      searchDateUTC
+    );
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
       data: data,
@@ -32,7 +61,16 @@ const getRecord = async (req, res, next) => {
 /** Controller to create a new record */
 const newRecord = async (req, res, next) => {
   try {
-    const data = await RecordService.newRecord(req.body);
+    const { staffId, patientId, specialtyId, appointmentTime, reason } =
+      req.body;
+    let appointmentTimeUTC = dayjs(appointmentTime).toISOString();
+    const data = await RecordService.newRecord(
+      staffId,
+      patientId,
+      specialtyId,
+      appointmentTimeUTC,
+      reason
+    );
     res.status(StatusCodes.CREATED).json({
       code: StatusCodes.CREATED,
       data: data,
@@ -46,7 +84,40 @@ const newRecord = async (req, res, next) => {
 /** Controller to update a record */
 const updateRecord = async (req, res, next) => {
   try {
-    const data = await RecordService.updateRecord(req.params.id, req.body);
+    const {
+      staffId,
+      specialtyId,
+      status,
+      appointmentTime,
+      reason,
+      clinicalInformation,
+      height,
+      weight,
+      bloodPressure,
+      heartRate,
+      respirationRate,
+      temperature,
+      diagnose,
+      treatmentDirection,
+    } = req.body;
+    let appointmentTimeUTC = dayjs(appointmentTime).toISOString();
+    const data = await RecordService.updateRecord(
+      req.params.id,
+      staffId,
+      specialtyId,
+      status,
+      appointmentTimeUTC,
+      reason,
+      clinicalInformation,
+      height,
+      weight,
+      bloodPressure,
+      heartRate,
+      respirationRate,
+      temperature,
+      diagnose,
+      treatmentDirection
+    );
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
       data: data,

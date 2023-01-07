@@ -24,7 +24,13 @@ module.exports = (sequelize, DataTypes) => {
           field: "specialty_id",
         },
       });
-      Staff.hasMany(models.Record);
+      Staff.hasMany(models.Record, {
+        as: "record",
+        foreignKey: {
+          name: "staffId",
+          field: "staff_id",
+        },
+      });
       Staff.belongsToMany(models.Shift, {
         foreignKey: "staffId",
         unique: false,

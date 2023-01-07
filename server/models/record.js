@@ -8,8 +8,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Record.belongsTo(models.Patient);
-      Record.belongsTo(models.Staff);
+      Record.belongsTo(models.Patient, {
+        as: "patient",
+        foreignKey: {
+          name: "patientId",
+          field: "patient_id",
+        },
+      });
+      Record.belongsTo(models.Staff, {
+        as: "staff",
+        foreignKey: {
+          name: "staffId",
+          field: "staff_id",
+        },
+      });
+      Record.belongsTo(models.Specialty, {
+        as: "specialty",
+        foreignKey: {
+          name: "specialtyId",
+          field: "specialty_id",
+        },
+      });
       Record.belongsToMany(models.Medicine, {
         through: "record_medicine",
       });
@@ -33,12 +52,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      appointmentDate: {
+      appointmentTime: {
         type: DataTypes.DATE,
-        allowNull: false,
-      },
-      time: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
       reason: {
@@ -47,39 +62,42 @@ module.exports = (sequelize, DataTypes) => {
       },
       clinicalInformation: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       height: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       weight: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       bloodPressure: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       heartRate: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       respirationRate: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       temperature: {
         type: DataTypes.DECIMAL(2, 1),
         allowNull: false,
+        defaultValue: 0,
       },
       diagnose: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       treatmentDirection: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
     },
     {

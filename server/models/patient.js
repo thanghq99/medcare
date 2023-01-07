@@ -17,7 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
-      Patient.hasMany(models.Record);
+      Patient.hasMany(models.Record, {
+        as: "record",
+        foreignKey: {
+          name: "patientId",
+          field: "patient_id",
+        },
+      });
     }
   }
   Patient.init(

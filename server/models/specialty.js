@@ -15,6 +15,13 @@ module.exports = (sequelize, DataTypes) => {
           field: "specialty_id",
         },
       });
+      Specialty.belongsTo(models.Record, {
+        as: "record",
+        foreignKey: {
+          name: "specialtyId",
+          field: "specialty_id",
+        },
+      });
     }
   }
   Specialty.init(
