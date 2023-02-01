@@ -109,7 +109,7 @@ const updateAccount = async (id, body) => {
 
 //delete single account
 const deleteAccount = async (id) => {
-  await Account.destroy({ where: { id: id } });
+  await Account.update({ isDisabled: true }, { where: { id: id } });
   return "";
 };
 

@@ -3,7 +3,8 @@ const Joi = require("joi");
 const getStaffsSchema = Joi.object({
   searchName: Joi.string().required().allow(""),
   degreeFilter: Joi.string().required().allow(""),
-  specialtyFilter: Joi.number().required().allow(null),
+  disableFilter: Joi.string().required().valid("", true, false),
+  specialtyFilter: Joi.number().required().allow(""),
   order: Joi.string().valid("DESC", "ASC"),
   page: Joi.number().required(),
   pageSize: Joi.number().required(),

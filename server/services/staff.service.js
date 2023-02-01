@@ -30,10 +30,20 @@ const getAllStaffs = async (body) => {
   };
 
   const getSpecialtyFilter = () => {
-    if (body.specialtyFilter !== null)
+    if (body.specialtyFilter !== "")
       return {
         specialty_id: {
           [Op.eq]: body.specialtyFilter,
+        },
+      };
+    else return {};
+  };
+
+  const getDisableFilter = () => {
+    if (body.disableFilter !== "")
+      return {
+        is_disabled: {
+          [Op.eq]: body.disableFilter,
         },
       };
     else return {};
@@ -62,7 +72,7 @@ const getAllStaffs = async (body) => {
       {
         model: Account,
         as: "account",
-        where: [{ is_staff: true }, getSearchName()],
+        where: [{ is_staff: true }, getSearchName(), getDisableFilter()],
         attributes: {
           exclude: ["password", "isStaff", "createdAt", "updatedAt"],
         },

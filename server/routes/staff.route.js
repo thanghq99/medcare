@@ -1,12 +1,16 @@
 const express = require("express");
 const staffController = require("../controllers/staff.controller.js");
-const validate = require("../vadilators/validate");
+const validator = require("../vadilators/validate");
 const { getStaffsSchema } = require("../vadilators/staff.validator");
 
 const router = express.Router();
 
-//route to get all staffs
-router.get("", validate(getStaffsSchema), staffController.getAllStaffs);
+//route to get all staffs, using post with body for convenient, no caching needed
+router.post(
+  "/get-staffs",
+  validator(getStaffsSchema),
+  staffController.getAllStaffs
+);
 
 //route to create a new staff
 router.post("", staffController.newStaff);
