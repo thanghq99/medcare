@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
+import { viVN } from "@mui/material/locale";
 
 const LIGHT_MODE = grey[400];
 
@@ -41,16 +42,19 @@ const shadows = createShadow(LIGHT_MODE);
 
 const borderRadius = 8;
 
-const customTheme = createTheme({
-  shape: { borderRadius: borderRadius },
-  shadows: shadows,
-  typography: {
-    button: {
-      fontWeight: 600,
-      textTransform: "capitalize",
+const customTheme = createTheme(
+  {
+    shape: { borderRadius: borderRadius },
+    shadows: shadows,
+    typography: {
+      button: {
+        fontWeight: 600,
+        textTransform: "capitalize",
+      },
     },
+    components: {},
   },
-  components: {},
-});
+  viVN
+);
 
 export default customTheme;

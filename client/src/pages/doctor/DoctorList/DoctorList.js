@@ -134,7 +134,6 @@ export default function DoctorList() {
           />
         }
       />
-      {/* <PageHeader title="Danh sách bác sĩ" /> */}
       <Paper elevation={5} sx={{ bgcolor: "grey.100" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

@@ -66,7 +66,13 @@ const getAllStaffs = async (body) => {
   const data = await Staff.findAndCountAll({
     where: [getDegreeFilter(), getSpecialtyFilter()],
     attributes: {
-      exclude: ["accountId", "specialtyId", "createdAt", "updatedAt"],
+      exclude: [
+        "accountId",
+        "degreeId",
+        "specialtyId",
+        "createdAt",
+        "updatedAt",
+      ],
     },
     include: [
       {
