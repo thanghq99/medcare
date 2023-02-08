@@ -24,6 +24,13 @@ module.exports = (sequelize, DataTypes) => {
           field: "specialty_id",
         },
       });
+      Staff.belongsTo(models.Degree, {
+        as: "degree",
+        foreignKey: {
+          name: "degreeId",
+          field: "degree_id",
+        },
+      });
       Staff.hasMany(models.Record, {
         as: "record",
         foreignKey: {
@@ -40,10 +47,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Staff.init(
     {
-      degree: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // degree: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       examinationFee: {
         type: DataTypes.INTEGER,
         allowNull: false,

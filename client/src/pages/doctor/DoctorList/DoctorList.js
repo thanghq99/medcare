@@ -23,13 +23,14 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
+import axios from "../../../api/axios";
+
 import ListItemAction from "./ListItemAction";
 import EnhancedTableHead from "./EnhancedTableHead";
 import TableHeadReplacement from "./TableHeadReplacement";
 import CustomTablePagination from "../../../components/TablePagination";
 import PageHeader from "../../../components/PageHeader";
-
-import axios from "../../../api/axios";
+import CreateDoctorForm from "./CreateDoctorForm";
 
 export default function DoctorList() {
   const [selected, setSelected] = React.useState([]);
@@ -37,16 +38,10 @@ export default function DoctorList() {
   const [doctorList, setDoctorList] = React.useState([]);
   const [doctorCount, setDoctorCount] = React.useState(0);
   const [specialtyList, setSpecialtyList] = React.useState([]);
+  const [degreeList, setDegreeList] = React.useState([]);
   const [trigger, setTrigger] = React.useState(false); //togger true false
 
-  const {
-    handleSubmit,
-    setValue,
-    getValues,
-    control,
-    watch,
-    formState: { errors },
-  } = useForm({
+  const { handleSubmit, setValue, getValues, control } = useForm({
     defaultValues: {
       searchName: "",
       disableFilter: false,
@@ -68,9 +63,11 @@ export default function DoctorList() {
       try {
         const doctors = await axios.post("staff/get-staffs", getValues());
         const specialties = await axios.get("specialty");
+        const degrees = await axios.get("degree");
         setDoctorList(doctors.data.data.rows);
         setDoctorCount(doctors.data.data.count);
         setSpecialtyList(specialties.data.data);
+        setDegreeList(degrees.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -129,8 +126,15 @@ export default function DoctorList() {
     <>
       <PageHeader
         title="Danh sách bác sĩ"
-        action={<Button variant="contained">Thêm bác sĩ mới</Button>}
+        action={
+          <CreateDoctorForm
+            triggerReFetch={triggerReFetch}
+            specialtyList={specialtyList}
+            degreeList={degreeList}
+          />
+        }
       />
+      {/* <PageHeader title="Danh sách bác sĩ" /> */}
       <Paper elevation={5} sx={{ bgcolor: "grey.100" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -177,9 +181,11 @@ export default function DoctorList() {
                 render={({ field }) => (
                   <TextField {...field} select fullWidth label="Bằng cấp">
                     <MenuItem value="">Tất cả</MenuItem>
-                    <MenuItem value="Gsu">Giáo sư</MenuItem>
-                    <MenuItem value="Tsi">Tiến sĩ</MenuItem>
-                    <MenuItem value="Bsi">Bác sĩ</MenuItem>
+                    {degreeList.map((s) => (
+                      <MenuItem key={s.id} value={s.id}>
+                        {s.name}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -254,7 +260,9 @@ export default function DoctorList() {
                       <TableCell align="left">
                         {row.specialty ? row.specialty.name : "Không có"}
                       </TableCell>
-                      <TableCell align="left">{row.degree}</TableCell>
+                      <TableCell align="left">
+                        {row.degree ? row.degree.name : "Không có"}
+                      </TableCell>
                       <TableCell align="right">
                         {row.account.phoneNumber}
                       </TableCell>

@@ -21,7 +21,8 @@ const newAccount = async (body, transaction) => {
       isStaff: body.isStaff,
       isDisabled: false,
       staffDetails: {
-        degree: body.degree,
+        degreeId: body.degree,
+        specialtyId: body.specialty,
         examinationFee: body.examinationFee,
         isAdmin: body.isAdmin,
       },

@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+const { sequelize } = require("../models/index.js");
 const AccountService = require("../services/account.service.js");
 
 /** Controller to get all accounts available */
@@ -31,14 +32,17 @@ const getAccount = async (req, res, next) => {
 
 /** Controller to create a new account */
 const newAccount = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
-    const data = await AccountService.newAccount(req.body);
+    const data = await AccountService.newAccount(req.body, t);
+    await t.commit();
     res.status(StatusCodes.CREATED).json({
       code: StatusCodes.CREATED,
       data: data,
       message: "Account created successfully",
     });
   } catch (error) {
+    await t.rollback();
     next(error);
   }
 };

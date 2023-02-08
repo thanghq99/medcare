@@ -1,4 +1,4 @@
-const { Staff, Account, Specialty, Sequelize } = require("../models");
+const { Staff, Account, Specialty, Degree, Sequelize } = require("../models");
 const Op = Sequelize.Op;
 const { getPagination } = require("../utils/paginationHelper");
 
@@ -22,8 +22,8 @@ const getAllStaffs = async (body) => {
   const getDegreeFilter = () => {
     if (body.degreeFilter !== "")
       return {
-        degree: {
-          [Op.iLike]: `%${body.degreeFilter}%`,
+        degree_id: {
+          [Op.eq]: body.degreeFilter,
         },
       };
     else return {};
@@ -84,6 +84,13 @@ const getAllStaffs = async (body) => {
           exclude: ["createdAt", "updatedAt"],
         },
       },
+      {
+        model: Degree,
+        as: "degree",
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
     ],
     limit,
     offset,
@@ -137,6 +144,13 @@ const getStaff = async (id) => {
       {
         model: Specialty,
         as: "specialty",
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
+      {
+        model: Degree,
+        as: "degree",
         attributes: {
           exclude: ["createdAt", "updatedAt"],
         },
