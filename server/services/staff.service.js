@@ -116,9 +116,9 @@ const updateStaff = async (id, body) => {
   await Staff.update(
     {
       isAdmin: body.isAdmin,
-      degree: body.degree,
+      degreeId: body.degree,
       examinationFee: body.examinationFee,
-      specialtyId: body.specialtyId,
+      specialtyId: body.specialty,
     },
     {
       where: { id: id },

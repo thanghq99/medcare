@@ -55,7 +55,7 @@ const updateStaff = async (req, res, next) => {
     isAdmin: req.body.isAdmin,
     degree: req.body.degree,
     examinationFee: req.body.examinationFee,
-    specialtyId: req.body.specialtyId,
+    specialty: req.body.specialty,
   };
   const accountData = {
     firstName: req.body.firstName,
