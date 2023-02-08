@@ -61,6 +61,22 @@ const updateAccount = async (req, res, next) => {
   }
 };
 
+/** Controller to toggle isDisabled */
+const toggleIsDisabled = async (req, res, next) => {
+  console.log("isDisabled", req.body.isDisabled);
+
+  try {
+    const data = await AccountService.toggleIsDisabled(req.params.id, req.body);
+    res.status(StatusCodes.ACCEPTED).json({
+      code: StatusCodes.ACCEPTED,
+      data: data,
+      message: "Account status updated successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /** Controller to delete a single account */
 const deleteAccount = async (req, res, next) => {
   try {
@@ -81,4 +97,5 @@ module.exports = {
   getAccount,
   updateAccount,
   deleteAccount,
+  toggleIsDisabled,
 };

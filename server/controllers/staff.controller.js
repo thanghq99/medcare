@@ -51,14 +51,42 @@ const newStaff = async (req, res, next) => {
 
 /** Controller to update a staff */
 const updateStaff = async (req, res, next) => {
+  const staffData = {
+    isAdmin: req.body.isAdmin,
+    degree: req.body.degree,
+    examinationFee: req.body.examinationFee,
+    specialtyId: req.body.specialtyId,
+  };
+  const accountData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    dob: req.body.dob,
+    gender: req.body.gender,
+    address: req.body.address,
+  };
   try {
-    const data = await StaffService.updateStaff(req.params.id, req.body);
+    transaction = await sequelize.transaction();
+    const updateStaffResult = await StaffService.updateStaff(
+      req.params.id,
+      staffData
+    );
+    const updateAccountResult = await AccountService.updateAccount(
+      req.body.accountId,
+      accountData
+    );
+
+    await transaction.commit();
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
-      data: data,
+      data: { updateStaffResult, updateAccountResult },
       message: "Staff updated successfully",
     });
   } catch (error) {
+    if (transaction) {
+      await transaction.rollback();
+    }
     next(error);
   }
 };

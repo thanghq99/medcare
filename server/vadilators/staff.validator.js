@@ -12,9 +12,9 @@ const getStaffsSchema = Joi.object({
 });
 
 const updateStaffSchema = Joi.object({
-  degree: Joi.string().required().allow(""),
-  specialtyId: Joi.number().required().allow(null),
-  examinationFee: Joi.number().required(),
+  // degree: Joi.string().required().allow(""),
+  // specialtyId: Joi.number().required().allow(null),
+  // examinationFee: Joi.number().required(),
 });
 
 module.exports = { getStaffsSchema, updateStaffSchema };

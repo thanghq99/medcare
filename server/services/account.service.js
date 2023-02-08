@@ -95,7 +95,6 @@ const updateAccount = async (id, body) => {
       firstName: body.firstName,
       lastName: body.lastName,
       email: body.email,
-      password: body.password,
       phoneNumber: body.phoneNumber,
       dob: body.dob,
       gender: body.gender,
@@ -108,9 +107,17 @@ const updateAccount = async (id, body) => {
   return body;
 };
 
+//toggle isDisabled for both staff and patient
+const toggleIsDisabled = async (id, body) => {
+  await Account.update({ isDisabled: body.isDisabled }, { where: { id: id } });
+  return "";
+};
+
 //delete single account
 const deleteAccount = async (id) => {
-  await Account.update({ isDisabled: true }, { where: { id: id } });
+  const account = Account.findByPk(id);
+  if (account)
+    await Account.update({ isDisabled: true }, { where: { id: id } });
   return "";
 };
 
@@ -129,4 +136,5 @@ module.exports = {
   getAccount,
   updateAccount,
   deleteAccount,
+  toggleIsDisabled,
 };

@@ -276,7 +276,12 @@ export default function DoctorList() {
                         )}
                       </TableCell>
                       <TableCell align="right">
-                        <ListItemAction />
+                        <ListItemAction
+                          staffData={row}
+                          triggerReFetch={triggerReFetch}
+                          specialtyList={specialtyList}
+                          degreeList={degreeList}
+                        />
                       </TableCell>
                     </TableRow>
                   );

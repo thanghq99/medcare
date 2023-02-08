@@ -109,6 +109,7 @@ const newStaff = async (body) => {
 const updateStaff = async (id, body) => {
   await Staff.update(
     {
+      isAdmin: body.isAdmin,
       degree: body.degree,
       examinationFee: body.examinationFee,
       specialtyId: body.specialtyId,

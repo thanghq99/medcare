@@ -23,6 +23,9 @@ router.put(
   accountController.updateAccount
 );
 
+//route to update a single account by their account id
+router.post("/:id/toggleIsDisabled", accountController.toggleIsDisabled);
+
 //route to delete a single account by their account id
 router.delete("/:id", accountController.deleteAccount);
 
