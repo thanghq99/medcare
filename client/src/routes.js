@@ -6,11 +6,11 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import WorkSchedule from "./pages/workSchedule/WorkSchedule";
 import AppointmentSchedule from "./pages/appointmentSchedule/AppointmentSchedule";
 import DoctorList from "./pages/doctor/DoctorList/DoctorList";
-import Medicines from "./pages/medicine/Medicines";
-import Subclinical from "./pages/subclinical/Subclinical";
 import Article from "./pages/article/Article";
 import PatientList from "./pages/patient/PatientList/PatientList";
 import SpecialtyList from "./pages/specialty/SpecialyList/SpecialtyList";
+import MedicineList from "./pages/medicine/MecicineList/MedicineList";
+import SubclinicalList from "./pages/subclinical/SubclinicalList/SubclinicalList";
 
 export default function Router() {
   return useRoutes([
@@ -99,7 +99,7 @@ export default function Router() {
           children: [
             {
               path: "danh-sach",
-              element: <Medicines />,
+              element: <MedicineList />,
             },
             {
               path: "tao-moi",
@@ -116,7 +116,7 @@ export default function Router() {
           children: [
             {
               path: "danh-sach",
-              element: <Subclinical />,
+              element: <SubclinicalList />,
             },
             {
               path: "tao-moi",
