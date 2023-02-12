@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const getPatientSchema = Joi.object({
   searchValue: Joi.string().required().allow(""),
+  disableFilter: Joi.string().required().valid("", true, false),
   order: Joi.string().valid("DESC", "ASC"),
   page: Joi.number().required(),
   pageSize: Joi.number().required(),
@@ -9,8 +10,8 @@ const getPatientSchema = Joi.object({
 });
 
 const updatePatientSchema = Joi.object({
-  healthHistory: Joi.string().required().allow(""),
-  familyHealthHistory: Joi.string().required().allow(""),
+  // healthHistory: Joi.string().required().allow(""),
+  // familyHealthHistory: Joi.string().required().allow(""),
 });
 
 module.exports = { getPatientSchema, updatePatientSchema };

@@ -3,7 +3,7 @@ const Op = Sequelize.Op;
 const { getPagination } = require("../utils/paginationHelper");
 
 //get all patients
-const getAllPatients = async (body) => {
+const getPatients = async (body) => {
   const getSearchNameOrPhoneNumber = () => {
     if (body.searchValue !== "")
       return Sequelize.or(
@@ -19,7 +19,7 @@ const getAllPatients = async (body) => {
         ),
         Sequelize.where(
           Sequelize.col("phone_number"),
-          Op.eq,
+          Op.iLike,
           `%${body.searchValue}%`
         )
       );
@@ -38,15 +38,29 @@ const getAllPatients = async (body) => {
       ? [[...orderSchema[`${body.orderBy}`], body.order]]
       : [];
 
+  const getDisableFilter = () => {
+    if (body.disableFilter !== "")
+      return {
+        is_disabled: {
+          [Op.eq]: body.disableFilter,
+        },
+      };
+    else return {};
+  };
+
   const data = await Patient.findAndCountAll({
     attributes: {
-      exclude: ["accountId", "specialtyId", "createdAt", "updatedAt"],
+      exclude: ["accountId", "createdAt", "updatedAt"],
     },
     include: [
       {
         model: Account,
         as: "account",
-        where: [{ is_staff: false }, getSearchNameOrPhoneNumber()],
+        where: [
+          { is_staff: false },
+          getSearchNameOrPhoneNumber(),
+          getDisableFilter(),
+        ],
         attributes: {
           exclude: ["password", "isStaff", "createAt", "updateAt"],
         },
@@ -56,6 +70,12 @@ const getAllPatients = async (body) => {
     offset,
     order: getOrder(),
   });
+  return data;
+};
+
+//get all patients
+const getAllPatients = async () => {
+  const data = await Patient.findAll(body);
   return data;
 };
 
@@ -106,6 +126,7 @@ const getPatient = async (id) => {
 };
 
 module.exports = {
+  getPatients,
   getAllPatients,
   newPatient,
   getPatient,

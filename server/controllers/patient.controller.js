@@ -3,6 +3,20 @@ const { sequelize } = require("../models");
 const PatientService = require("../services/patient.service.js");
 const AccountService = require("../services/account.service.js");
 
+/** Controller to get patients by name or phone number */
+const getPatients = async (req, res, next) => {
+  try {
+    const data = await PatientService.getPatients(req.body);
+    res.status(StatusCodes.OK).json({
+      code: StatusCodes.OK,
+      data: data,
+      message: "Patients fetched successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /** Controller to get all patients available */
 const getAllPatients = async (req, res, next) => {
   try {
@@ -47,14 +61,40 @@ const newPatient = async (req, res, next) => {
 
 /** Controller to update a patient */
 const updatePatient = async (req, res, next) => {
+  const patientData = {
+    healthHistory: req.body.healthHistory,
+    familyHealthHistory: req.body.familyHealthHistory,
+  };
+  const accountData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    dob: req.body.dob,
+    gender: req.body.gender,
+    address: req.body.address,
+  };
   try {
-    const data = await PatientService.updatePatient(req.params.id, req.body);
+    transaction = await sequelize.transaction();
+    const updatePatientResult = await PatientService.updatePatient(
+      req.params.id,
+      patientData
+    );
+    const updateAccountResult = await AccountService.updateAccount(
+      req.body.accountId,
+      accountData
+    );
+
+    await transaction.commit();
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
-      data: data,
+      data: { updatePatientResult, updateAccountResult },
       message: "Patient updated successfully",
     });
   } catch (error) {
+    if (transaction) {
+      await transaction.rollback();
+    }
     next(error);
   }
 };
@@ -83,6 +123,7 @@ const deletePatient = async (req, res, next) => {
 };
 
 module.exports = {
+  getPatients,
   getAllPatients,
   newPatient,
   getPatient,

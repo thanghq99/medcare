@@ -1,6 +1,7 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
+import TableSortLabel from "@mui/material/TableSortLabel";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 
@@ -12,16 +13,16 @@ const headCells = [
     label: "Họ và tên",
   },
   {
-    id: "gender",
-    numeric: false,
-    disablePadding: false,
-    label: "Giới tính",
-  },
-  {
     id: "dob",
     numeric: false,
     disablePadding: false,
     label: "Ngày sinh",
+  },
+  {
+    id: "gender",
+    numeric: false,
+    disablePadding: false,
+    label: "Giới tính",
   },
   {
     id: "phoneNumber",
@@ -30,16 +31,16 @@ const headCells = [
     label: "Số điện thoại",
   },
   {
-    id: "examinationCount",
+    id: "examinationTimes",
     numeric: true,
     disablePadding: false,
     label: "Số lần khám",
   },
   {
-    id: "status",
+    id: "hasAccount",
     numeric: false,
     disablePadding: false,
-    label: "Trạng thái",
+    label: "Có tài khoản?",
   },
   {
     id: "action",
@@ -50,7 +51,17 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, numSelected, rowCount } = props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
 
   return (
     <TableHead sx={{ height: 60, borderRadius: 0 }}>
@@ -68,8 +79,15 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
+            sortDirection={orderBy === headCell.id ? order : false}
           >
-            {headCell.label}
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+            </TableSortLabel>
           </TableCell>
         ))}
       </TableRow>
