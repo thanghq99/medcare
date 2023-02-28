@@ -11,6 +11,7 @@ import PatientList from "./pages/patient/PatientList/PatientList";
 import SpecialtyList from "./pages/specialty/SpecialyList/SpecialtyList";
 import MedicineList from "./pages/medicine/MecicineList/MedicineList";
 import SubclinicalList from "./pages/subclinical/SubclinicalList/SubclinicalList";
+import ShiftList from "./pages/shift/ShiftList/ShiftList";
 
 export default function Router() {
   return useRoutes([
@@ -91,6 +92,23 @@ export default function Router() {
             {
               path: "chinh-sua",
               element: <>chinh sua chuyen-khoa</>,
+            },
+          ],
+        },
+        {
+          path: "ca-lam-viec",
+          children: [
+            {
+              path: "danh-sach",
+              element: <ShiftList />,
+            },
+            {
+              path: "tao-moi",
+              element: <>tao moi ca lam viec</>,
+            },
+            {
+              path: "chinh-sua",
+              element: <>chinh sua ca lam viec</>,
             },
           ],
         },

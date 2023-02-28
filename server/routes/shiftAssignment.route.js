@@ -1,25 +1,25 @@
 const express = require("express");
 const shiftAssignmentController = require("../controllers/shiftAssignment.controller");
-const validate = require("../vadilators/validate");
-const {
-  getShiftAssignmentSchema,
-  postShiftAssignmentSchema,
-  deleteShiftAssignmentsSchema,
-} = require("../vadilators/shiftAssignment.validator");
+// const validate = require("../vadilators/validate");
+// const {
+//   getShiftAssignmentSchema,
+//   postShiftAssignmentSchema,
+//   deleteShiftAssignmentsSchema,
+// } = require("../vadilators/shiftAssignment.validator");
 
 const router = express.Router();
 
 //route to get all shift assignments
 router.get(
   "",
-  validate(getShiftAssignmentSchema),
+  // validate(getShiftAssignmentSchema),
   shiftAssignmentController.getAllShiftAssignments
 );
 
 //route to create a new shift assignment
 router.post(
   "",
-  validate(postShiftAssignmentSchema),
+  // validate(postShiftAssignmentSchema),
   shiftAssignmentController.newShiftAssignment
 );
 
@@ -32,7 +32,7 @@ router.put("/:id", shiftAssignmentController.updateShiftAssignment);
 //route to delete shift assignments by dates
 router.delete(
   "/by-dates",
-  validate(deleteShiftAssignmentsSchema),
+  // validate(deleteShiftAssignmentsSchema),
   shiftAssignmentController.deleteShiftAssignmentByDates
 );
 

@@ -1,9 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
 const ShiftService = require("../services/shift.service.js");
-const dayjs = require("dayjs");
-var utc = require("dayjs/plugin/utc");
-dayjs.extend(utc);
-const { defaultDate } = require("../utils/defaultDate");
 
 /** Controller to get all shifts available */
 const getAllShifts = async (req, res, next) => {
@@ -35,20 +31,11 @@ const getShift = async (req, res, next) => {
 
 /** Controller to create a new shift */
 const newShift = async (req, res, next) => {
+  const { startTime, endTime } = req.body;
+
   try {
-    const tempStartTime = dayjs(req.body.startTime).utc();
-    const tempEndTime = dayjs(req.body.endTime).utc();
-
-    const startTime = defaultDate
-      .hour(tempStartTime.hour())
-      .minute(tempStartTime.minute());
-
-    const endTime = defaultDate
-      .hour(tempEndTime.hour())
-      .minute(tempEndTime.minute());
-
     // End time must be greater than start time
-    if (startTime.diff(endTime) >= 0) {
+    if (startTime > endTime) {
       res.status(StatusCodes.BAD_REQUEST).json({
         code: StatusCodes.BAD_REQUEST,
         data: "",
@@ -59,11 +46,9 @@ const newShift = async (req, res, next) => {
       // if shift is deleted, make it not deleted
       // if shift is created and not deleted, leave it as it is
       const foundShift = await ShiftService.getExistingShift(
-        startTime.format(),
-        endTime.format()
+        startTime,
+        endTime
       );
-
-      console.log(foundShift);
       if (foundShift && foundShift.isDeleted === false) {
         res.status(StatusCodes.CONFLICT).json({
           code: StatusCodes.CONFLICT,
@@ -80,10 +65,7 @@ const newShift = async (req, res, next) => {
           message: "Shift restored successfully",
         });
       } else {
-        const data = await ShiftService.newShift(
-          startTime.format(),
-          endTime.format()
-        );
+        const data = await ShiftService.newShift(startTime, endTime);
         res.status(StatusCodes.CREATED).json({
           code: StatusCodes.CREATED,
           data: data,
@@ -98,13 +80,39 @@ const newShift = async (req, res, next) => {
 
 /** Controller to update a shift */
 const updateShift = async (req, res, next) => {
+  const { startTime, endTime } = req.body;
   try {
-    const data = await ShiftService.updateShift(req.params.id, req.body);
-    res.status(StatusCodes.ACCEPTED).json({
-      code: StatusCodes.ACCEPTED,
-      data: data,
-      message: "Shift updated successfully",
-    });
+    // End time must be greater than start time
+    if (startTime > endTime) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        code: StatusCodes.BAD_REQUEST,
+        data: "",
+        message: "End time must be greater than start time",
+      });
+    } else {
+      const foundShift = await ShiftService.getExistingShift(
+        startTime,
+        endTime
+      );
+      if (foundShift) {
+        res.status(StatusCodes.CONFLICT).json({
+          code: StatusCodes.CONFLICT,
+          data: "",
+          message:
+            "Shift already existed. Try re create it if you cant find it on the list.",
+        });
+      } else {
+        const data = await ShiftService.updateShift(req.params.id, {
+          startTime: startTime,
+          endTime: endTime,
+        });
+        res.status(StatusCodes.ACCEPTED).json({
+          code: StatusCodes.ACCEPTED,
+          data: data,
+          message: "Shift updated successfully",
+        });
+      }
+    }
   } catch (error) {
     next(error);
   }

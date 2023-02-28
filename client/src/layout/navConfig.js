@@ -1,12 +1,13 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import Groups3Icon from '@mui/icons-material/Groups3';
-import MedicationIcon from '@mui/icons-material/Medication';
-import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import Groups3Icon from "@mui/icons-material/Groups3";
+import MedicationIcon from "@mui/icons-material/Medication";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 const navConfig = [
   {
@@ -62,7 +63,22 @@ const navConfig = [
   {
     title: "Lịch làm việc",
     path: "/lich-lam-viec",
-    icon: <CalendarMonthIcon />
+    icon: <CalendarMonthIcon />,
+  },
+  {
+    title: "Ca làm việc",
+    path: "/ca-lam-viec",
+    icon: <WorkHistoryIcon />,
+    children: [
+      {
+        title: "Danh sách",
+        path: "/ca-lam-viec/danh-sach",
+      },
+      {
+        title: "Tạo mới",
+        path: "/ca-lam-viec/tao-moi",
+      },
+    ],
   },
   {
     title: "Chuyên khoa",

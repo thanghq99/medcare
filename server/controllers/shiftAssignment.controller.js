@@ -2,20 +2,15 @@ const { StatusCodes } = require("http-status-codes");
 const { sequelize } = require("../models/index.js");
 const ShiftAssignmentService = require("../services/shiftAssignment.service.js");
 const ShiftService = require("../services/shift.service.js");
-const dayjs = require("dayjs");
-var utc = require("dayjs/plugin/utc");
-dayjs.extend(utc);
-const { defaultDate } = require("../utils/defaultDate");
 
 /** Controller to get all shifts available assignment */
 const getAllShiftAssignments = async (req, res, next) => {
   try {
     const { staffId, shiftId, dateList } = req.body;
-    const utcDateList = dateList.map((date) => dayjs(date).utc().format());
     const data = await ShiftAssignmentService.getAllShiftAssignments(
       staffId, //1 or all | number or null
       shiftId, //1 or all | number or null
-      utcDateList //atleast 1 day
+      dateList //atleast 1 day
     );
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,
@@ -51,58 +46,62 @@ const newShiftAssignment = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const { staffId, shiftId, dateList } = req.body;
-    const utcDateList = dateList.map((date) => dayjs(date).utc().format());
 
-    //get assigning shift data
+    // get assigning shift data
     let assigningShift = await ShiftService.getShift(shiftId);
-    assigningShift = assigningShift.toJSON();
-    const assigningShiftStartTime = dayjs(assigningShift.startTime);
-    const assigningShiftEndTime = dayjs(assigningShift.endTime);
+    const assigningShiftStartTime = assigningShift.startTime;
+    const assigningShiftEndTime = assigningShift.endTime;
 
     //all existing shift assignment of that staff with that shift on all days are looking at
-    const existingShiftAssignment =
+    const existingShiftAssignments =
       await ShiftAssignmentService.getAllShiftAssignments(
         staffId, //must have 1 staff | number
         null, //shiftId must be null to get all shifts to check time conflict between old and new shifts
-        utcDateList //all dates from given array to check time conflict of shifts
+        dateList //all dates from given array to check time conflict of shifts
       );
 
     let conflictDate;
     let conflictShift;
-    // iterate through each date
+    // iterate through each date that need to assign
     const isConflict = dateList.some((date) =>
       // check existing/duplicated/conflict shift on each date
-      existingShiftAssignment.some((assignedShift) => {
-        assignedShift = assignedShift.toJSON();
-        const assignedShiftStartTime = dayjs(assignedShift.shift.startTime);
-        const assignedShiftEndTime = dayjs(assignedShift.shift.endTime);
-        console.log({ assDate: assignedShift.date, date });
-        if (dayjs(assignedShift.date).diff(dayjs(date)) === 0) {
-          console.log("must check this day");
+
+      existingShiftAssignments
+        .filter((assignedShift) => {
+          let assignedShiftDate = new Date(assignedShift.date).getTime();
+          let checkingDate = new Date(date).getTime();
+          return assignedShiftDate === checkingDate;
+        })
+        .some((assignedShift) => {
+          const assignedShiftStartTime = assignedShift.shift.startTime;
+          const assignedShiftEndTime = assignedShift.shift.endTime;
+          console.log({
+            assignedShift: assignedShift.date,
+            checkingDate: date,
+          });
+          console.log("check date:", date);
           //check only shifts in this date
           if (
             assignedShift.shiftId === shiftId //exact shift has be assigned
           ) {
             console.log("exact shift has be assigned");
-            conflictDate = dayjs(date).utc().format();
+            conflictDate = date;
             conflictShift = assignedShift;
             return true;
           } else if (
-            assigningShiftEndTime.diff(assignedShiftStartTime) <= 0 ||
-            assigningShiftStartTime.diff(assignedShiftEndTime) >= 0
+            // both start time and end time must be before existing start time or after existing end time
+            assigningShiftEndTime <= assignedShiftStartTime ||
+            assigningShiftStartTime >= assignedShiftEndTime
           ) {
             console.log("shift time not conflicting");
             return false;
           } else {
             console.log("shift time conflicts");
-            conflictDate = dayjs(date).utc().format();
+            conflictDate = date;
             conflictShift = assignedShift;
             return true;
           }
-        }
-        console.log("not needed to check this day");
-        return false;
-      })
+        })
     );
 
     if (isConflict) {
@@ -119,9 +118,9 @@ const newShiftAssignment = async (req, res, next) => {
         date: date,
       }));
 
-      const data = await ShiftAssignmentService.newShiftAssignment(
-        bulkShiftAssignmentData
-      );
+      // const data = await ShiftAssignmentService.newShiftAssignment(
+      //   bulkShiftAssignmentData
+      // );
       await transaction.commit();
       res.status(StatusCodes.CREATED).json({
         code: StatusCodes.CREATED,
@@ -170,10 +169,9 @@ const deleteShiftAssignment = async (req, res, next) => {
 const deleteShiftAssignmentByDates = async (req, res, next) => {
   try {
     const { staffId, dateList } = req.body;
-    const utcDateList = dateList.map((date) => dayjs(date).utc().format());
     await ShiftAssignmentService.deleteShiftAssignmentByDates(
       staffId,
-      utcDateList
+      dateList
     );
     res.status(StatusCodes.OK).json({
       code: StatusCodes.OK,

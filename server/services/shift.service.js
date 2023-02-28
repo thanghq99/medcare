@@ -13,7 +13,6 @@ const getAllShifts = async () => {
 
 //create new shift
 const newShift = async (startTime, endTime) => {
-  console.log({ startTime, endTime });
   const data = await Shift.create({ startTime: startTime, endTime: endTime });
   return data;
 };

@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   Shift.init(
     {
       startTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       endTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       isDeleted: {
