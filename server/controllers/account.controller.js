@@ -34,13 +34,22 @@ const getAccount = async (req, res, next) => {
 const newAccount = async (req, res, next) => {
   const t = await sequelize.transaction();
   try {
-    const data = await AccountService.newAccount(req.body, t);
-    await t.commit();
-    res.status(StatusCodes.CREATED).json({
-      code: StatusCodes.CREATED,
-      data: data,
-      message: "Account created successfully",
-    });
+    let data = await AccountService.findOneByEmail(req.body.email);
+    if (data) {
+      res.status(StatusCodes.CONFLICT).json({
+        code: StatusCodes.CONFLICT,
+        data: data,
+        message: "This email has already been used or soft-deleted",
+      });
+    } else {
+      data = await AccountService.newAccount(req.body);
+      await t.commit();
+      res.status(StatusCodes.CREATED).json({
+        code: StatusCodes.CREATED,
+        data: data,
+        message: "Account created successfully",
+      });
+    }
   } catch (error) {
     await t.rollback();
     next(error);

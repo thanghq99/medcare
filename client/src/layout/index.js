@@ -26,7 +26,7 @@ function PageLayout() {
           minHeight: "100%",
         }}
       >
-        <Container sx={{ mx: 'auto' }}>
+        <Container sx={{ mx: "auto" }}>
           <Outlet />
         </Container>
       </Box>

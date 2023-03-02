@@ -1,27 +1,36 @@
-import { useRoutes } from "react-router-dom";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
 
 import PageLayout from "./layout";
 import ErrorPage from "./pages/ErrorPage";
-import Dashboard from "./pages/dashboard/Dashboard";
 import WorkSchedule from "./pages/workSchedule/WorkSchedule";
 import AppointmentSchedule from "./pages/appointmentSchedule/AppointmentSchedule";
 import DoctorList from "./pages/doctor/DoctorList/DoctorList";
-import Article from "./pages/article/Article";
 import PatientList from "./pages/patient/PatientList/PatientList";
 import SpecialtyList from "./pages/specialty/SpecialyList/SpecialtyList";
 import MedicineList from "./pages/medicine/MecicineList/MedicineList";
 import SubclinicalList from "./pages/subclinical/SubclinicalList/SubclinicalList";
 import ShiftList from "./pages/shift/ShiftList/ShiftList";
+import Signin from "./pages/authPages/Signin";
+import Signup from "./pages/authPages/Signup";
+import RenewPassword from "./pages/authPages/RenewPassword";
+import AuthPageLayout from "./layout/AuthPageLayout";
 
-export default function Router() {
+import useAuth from "./hooks/useAuth";
+
+const Router = () => {
+  const { isLoggedIn } = useAuth();
   return useRoutes([
     {
       path: "/",
-      element: <PageLayout />,
+      element: isLoggedIn() ? (
+        <PageLayout />
+      ) : (
+        <Navigate to="/auth/dang-nhap" />
+      ),
       children: [
         {
-          path: "dashboard",
-          element: <Dashboard />,
+          path: "",
+          element: <Navigate to="/lich-kham" />,
         },
         {
           path: "lich-lam-viec",
@@ -29,145 +38,61 @@ export default function Router() {
         },
         {
           path: "lich-kham",
-          children: [
-            {
-              path: "danh-sach",
-              element: <AppointmentSchedule />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi lich kham</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua lich kham</>,
-            },
-          ],
+          element: <AppointmentSchedule />,
         },
         {
           path: "bac-si",
-          children: [
-            {
-              path: "danh-sach",
-              element: <DoctorList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi bac si</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua bac si</>,
-            },
-          ],
+          element: <DoctorList />,
         },
         {
           path: "benh-nhan",
-          children: [
-            {
-              path: "danh-sach",
-              element: <PatientList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi benh-nhan</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua benh-nhan</>,
-            },
-          ],
+          element: <PatientList />,
         },
         {
           path: "chuyen-khoa",
-          children: [
-            {
-              path: "danh-sach",
-              element: <SpecialtyList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi chuyen-khoa</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua chuyen-khoa</>,
-            },
-          ],
+          element: <SpecialtyList />,
         },
         {
           path: "ca-lam-viec",
-          children: [
-            {
-              path: "danh-sach",
-              element: <ShiftList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi ca lam viec</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua ca lam viec</>,
-            },
-          ],
+          element: <ShiftList />,
         },
         {
           path: "thuoc",
-          children: [
-            {
-              path: "danh-sach",
-              element: <MedicineList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi thuoc</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua thuoc</>,
-            },
-          ],
+          element: <MedicineList />,
         },
         {
           path: "can-lam-sang",
-          children: [
-            {
-              path: "danh-sach",
-              element: <SubclinicalList />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi can-lam-sang</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua can-lam-sang</>,
-            },
-          ],
-        },
-        {
-          path: "bai-viet",
-          children: [
-            {
-              path: "danh-sach",
-              element: <Article />,
-            },
-            {
-              path: "tao-moi",
-              element: <>tao moi ai-viet</>,
-            },
-            {
-              path: "chinh-sua",
-              element: <>chinh sua bai-viet</>,
-            },
-          ],
-        },
-        {
-          path: "*",
-          element: <ErrorPage />,
+          element: <SubclinicalList />,
         },
       ],
     },
+    {
+      path: "/auth",
+      element: !isLoggedIn() ? <AuthPageLayout /> : <Navigate to="/" />,
+      children: [
+        {
+          path: "dang-nhap",
+          element: <Signin />,
+        },
+        {
+          path: "dang-ky",
+          element: <Signup />,
+        },
+        {
+          path: "lay-lai-mat-khau",
+          element: <RenewPassword />,
+        },
+        {
+          path: "",
+          element: <Navigate to="/auth/dang-nhap" />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
+    },
   ]);
-}
+};
+
+export default Router;

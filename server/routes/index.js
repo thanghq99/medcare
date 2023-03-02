@@ -14,21 +14,23 @@ const shiftRoute = require("./shift.route.js");
 const shiftAssignmentRoute = require("./shiftAssignment.route.js");
 const authenticationRoute = require("./authentication.route.js");
 
+const jwtVerifying = require("../middlewares/jwtVerifying");
+
 router.get("/", (req, res) => {
   res.json("Medcare api.");
 });
 
 // router.use("/demo", demoRoute);
-router.use("/account", accountRoute);
-router.use("/staff", staffRoute);
-router.use("/patient", patientRoute);
-router.use("/record", recordRoute);
-router.use("/medicine", medicineRoute);
-router.use("/subclinical", subclinicalRoute);
-router.use("/specialty", specialtyRoute);
-router.use("/degree", degreeRoute);
-router.use("/shift", shiftRoute);
-router.use("/shift-assignment", shiftAssignmentRoute);
+router.use("/account", jwtVerifying, accountRoute);
+router.use("/staff", jwtVerifying, staffRoute);
+router.use("/patient", jwtVerifying, patientRoute);
+router.use("/record", jwtVerifying, recordRoute);
+router.use("/medicine", jwtVerifying, medicineRoute);
+router.use("/subclinical", jwtVerifying, subclinicalRoute);
+router.use("/specialty", jwtVerifying, specialtyRoute);
+router.use("/degree", jwtVerifying, degreeRoute);
+router.use("/shift", jwtVerifying, shiftRoute);
+router.use("/shift-assignment", jwtVerifying, shiftAssignmentRoute);
 router.use("/authentication", authenticationRoute);
 
 module.exports = router;

@@ -10,55 +10,25 @@ import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 const navConfig = [
-  {
-    title: "dashboard",
-    path: "/dashboard",
-    icon: <DashboardIcon />,
-  },
+  // {
+  //   title: "dashboard",
+  //   path: "/dashboard",
+  //   icon: <DashboardIcon />,
+  // },
   {
     title: "Lịch khám",
     path: "/lich-kham",
     icon: <PendingActionsIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/lich-kham/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/lich-kham/tao-moi",
-      },
-    ],
   },
   {
     title: "Bác sĩ",
     path: "/bac-si",
     icon: <SupervisorAccountIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/bac-si/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/bac-si/tao-moi",
-      },
-    ],
   },
   {
     title: "Bệnh nhân",
     path: "/benh-nhan",
     icon: <PeopleAltIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/benh-nhan/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/benh-nhan/tao-moi",
-      },
-    ],
   },
   {
     title: "Lịch làm việc",
@@ -69,77 +39,37 @@ const navConfig = [
     title: "Ca làm việc",
     path: "/ca-lam-viec",
     icon: <WorkHistoryIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/ca-lam-viec/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/ca-lam-viec/tao-moi",
-      },
-    ],
   },
   {
     title: "Chuyên khoa",
     path: "/chuyen-khoa",
     icon: <Groups3Icon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/chuyen-khoa/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/chuyen-khoa/tao-moi",
-      },
-    ],
   },
   {
     title: "Thuốc",
     path: "/thuoc",
     icon: <MedicationIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/thuoc/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/thuoc/tao-moi",
-      },
-    ],
   },
   {
     title: "Cận lâm sàng",
     path: "/can-lam-sang",
     icon: <MedicalServicesIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/can-lam-sang/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/can-lam-sang/tao-moi",
-      },
-    ],
   },
-  {
-    title: "Bài viết",
-    path: "/bai-viet",
-    icon: <LibraryBooksIcon />,
-    children: [
-      {
-        title: "Danh sách",
-        path: "/bai-viet/danh-sach",
-      },
-      {
-        title: "Tạo mới",
-        path: "/bai-viet/tao-moi",
-      },
-    ],
-  },
+  // {
+  //   title: "Bài viết",
+  //   path: "/bai-viet",
+  //   icon: <LibraryBooksIcon />,
+  //   children: [
+  //     {
+  //       title: "Danh sách",
+  //       path: "/bai-viet/danh-sach",
+  //     },
+  //     {
+  //       title: "Tạo mới",
+  //       path: "/bai-viet/tao-moi",
+  //     },
+  //   ],
+  // },
 ];
 
 export default navConfig;

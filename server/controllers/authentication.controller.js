@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { sequelize } = require("../models/index.js");
 const AccountService = require("../services/account.service.js");
+const jwt = require("jsonwebtoken");
 
 /** Controller to register */
 const register = async (req, res, next) => {
@@ -33,16 +34,32 @@ const login = async (req, res, next) => {
   try {
     const data = await AccountService.findOneByEmailPassword(req.body);
     if (data === null)
-      res.status(StatusCodes.NOT_FOUND).json({
-        code: StatusCodes.NOT_FOUND,
+      res.status(StatusCodes.UNAUTHORIZED).json({
+        code: StatusCodes.UNAUTHORIZED,
         data: data,
-        message: "No account found with given username and password",
+        message: "Can not login with given info",
       });
-    res.status(StatusCodes.CREATED).json({
-      code: StatusCodes.CREATED,
-      data: data,
-      message: "Login successfully",
-    });
+    else {
+      const user = {
+        id: data.id,
+        isStaff: data.isStaff,
+        isAdmin: data.staffDetails.isAdmin ? data.staffDetails.isAdmin : false,
+      };
+      // Create the access token
+      console.log(
+        process.env.ACCESS_TOKEN_SECRET,
+        process.env.ACCESS_TOKEN_TTL
+      );
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_TTL,
+      });
+
+      res.status(StatusCodes.CREATED).json({
+        code: StatusCodes.CREATED,
+        data: { user, accessToken },
+        message: "Login successfully",
+      });
+    }
   } catch (error) {
     next(error);
   }
