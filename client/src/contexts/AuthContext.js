@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import roles from "../utils/roles";
 
 const AuthContext = createContext(null);
 
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     return accessToken ? true : false;
   }
 
-  console.log(isLoggedIn());
+  console.log(isLoggedIn() ? "logged in" : "not logged in");
 
   return (
     <AuthContext.Provider

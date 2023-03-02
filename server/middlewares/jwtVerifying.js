@@ -13,22 +13,22 @@ function jwtVerifying(req, res, next) {
       data: "",
       message: "No access token is found.",
     });
+  } else {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        console.log("error occured", err);
+
+        res.status(StatusCodes.FORBIDDEN).json({
+          code: StatusCodes.FORBIDDEN,
+          data: "",
+          message: "Access token is not valid.",
+        });
+      } else {
+        req.user = user;
+        next();
+      }
+    });
   }
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      console.log("error occured", err);
-
-      res.status(StatusCodes.FORBIDDEN).json({
-        code: StatusCodes.FORBIDDEN,
-        data: "",
-        message: "Access token is not valid.",
-      });
-    } else {
-      req.user = user;
-      next();
-    }
-  });
 }
 
 module.exports = jwtVerifying;

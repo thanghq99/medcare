@@ -10,8 +10,8 @@ const shiftAssignmentController = require("../controllers/shiftAssignment.contro
 const router = express.Router();
 
 //route to get all shift assignments
-router.get(
-  "",
+router.post(
+  "/get-shift-assignment",
   // validate(getShiftAssignmentSchema),
   shiftAssignmentController.getAllShiftAssignments
 );

@@ -26,7 +26,7 @@ function PageLayout() {
           minHeight: "100%",
         }}
       >
-        <Container sx={{ mx: "auto" }}>
+        <Container maxWidth="xl">
           <Outlet />
         </Container>
       </Box>

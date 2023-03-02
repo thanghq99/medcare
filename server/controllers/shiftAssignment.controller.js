@@ -118,13 +118,13 @@ const newShiftAssignment = async (req, res, next) => {
         date: date,
       }));
 
-      // const data = await ShiftAssignmentService.newShiftAssignment(
-      //   bulkShiftAssignmentData
-      // );
+      const data = await ShiftAssignmentService.newShiftAssignment(
+        bulkShiftAssignmentData
+      );
       await transaction.commit();
       res.status(StatusCodes.CREATED).json({
         code: StatusCodes.CREATED,
-        data: "",
+        data: data,
         message: "Shift assignment created successfully",
       });
     }
