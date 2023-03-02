@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const { sequelize } = require("../models/index.js");
 const AccountService = require("../services/account.service.js");
 const jwt = require("jsonwebtoken");
+const { renewPasswordMailer } = require("../services/mail.service.js");
 
 /** Controller to register */
 const register = async (req, res, next) => {
@@ -65,7 +66,39 @@ const login = async (req, res, next) => {
   }
 };
 
+/** Controller to login */
+const renewPassword = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
+  try {
+    let account = await AccountService.findOneByEmail(req.body.email);
+    if (account === null) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        code: StatusCodes.NOT_FOUND,
+        data: "",
+        message: "No email found.",
+      });
+    } else {
+      const newRandomPassword = Math.random().toString(36).substring(2, 8);
+      const result = await AccountService.renewPassword(
+        account.id,
+        newRandomPassword
+      );
+      await transaction.commit();
+      renewPasswordMailer(account.email, newRandomPassword);
+      res.status(StatusCodes.CREATED).json({
+        code: StatusCodes.CREATED,
+        data: "",
+        message: "Password updated successfully",
+      });
+    }
+  } catch (error) {
+    await transaction.rollback();
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
+  renewPassword,
 };

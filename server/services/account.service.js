@@ -107,6 +107,19 @@ const updateAccount = async (id, body) => {
   return body;
 };
 
+//renew password
+const renewPassword = async (id, password) => {
+  await Account.update(
+    {
+      password: password,
+    },
+    {
+      where: { id: id },
+    }
+  );
+  return "";
+};
+
 //toggle isDisabled for both staff and patient
 const toggleIsDisabled = async (id, body) => {
   await Account.update({ isDisabled: body.isDisabled }, { where: { id: id } });
@@ -135,6 +148,7 @@ module.exports = {
   findOneByEmailPassword,
   getAccount,
   updateAccount,
+  renewPassword,
   deleteAccount,
   toggleIsDisabled,
 };

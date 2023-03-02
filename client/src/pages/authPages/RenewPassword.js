@@ -41,8 +41,8 @@ function RenewPassword() {
     console.log(data);
 
     try {
-      // const result = await axios.post("login", data);
-      console.log("renewed password");
+      const result = await axios.post("authentication/renew-password", data);
+      console.log("renewed password", result);
       setSuccess(true);
     } catch (error) {
       console.log("cant renew password", error);
