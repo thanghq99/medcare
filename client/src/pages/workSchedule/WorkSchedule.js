@@ -9,6 +9,7 @@ import WorkScheduleList from "./WorkScheduleList";
 import CreateShiftAssignment from "./CreateShiftAssignment";
 
 import useAuth from "../../hooks/useAuth";
+import dayjs from "dayjs";
 
 function WorkSchedule() {
   const { user } = useAuth();
@@ -26,17 +27,32 @@ function WorkSchedule() {
     return user.isStaff === true && user.isAdmin === true;
   };
 
+  const getAllDatesInCurrentWeek = () => {
+    const today = dayjs();
+    const dateList = [];
+    const start = today.startOf("week");
+    for (let i = 0; i <= 6; i++) {
+      dateList.push(start.add(i, "day").format("YYYY-MM-DD"));
+    }
+    return dateList;
+  };
+
   const { handleSubmit, setValue, getValues, control } = useForm({
     defaultValues: {
       staffId: isStaffAndNotAdmin() ? user.id : "",
       shiftId: "",
-      dateList: [],
+      dateList: getAllDatesInCurrentWeek(),
     },
   });
 
   React.useEffect(() => {
     setLoading(true);
     const getData = async () => {
+      console.log({
+        staffId: getValues("staffId") === "" ? null : getValues("staffId"),
+        shiftId: getValues("shiftId") === "" ? null : getValues("shiftId"),
+        dateList: getValues("dateList"),
+      });
       try {
         const shiftAssignments = await axios.post(
           "/shift-assignment/get-shift-assignment",
