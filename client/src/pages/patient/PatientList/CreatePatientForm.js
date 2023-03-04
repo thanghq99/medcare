@@ -124,7 +124,6 @@ function CreatePatientForm({ triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={() => console.log(errors)}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box>
               <Typography variant="h6" mt={2} mb={1}>

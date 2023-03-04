@@ -139,15 +139,6 @@ function AppointmentEditForm({ appointment, triggerReFetch }) {
             </Typography>
           </DialogTitle>
           <DialogContent>
-            <button onClick={() => console.log(getValues())}>Get data</button>
-            <button onClick={() => console.log(errors)}>Get errors</button>
-            <button
-              onClick={() =>
-                console.log(getAvailableDates(shiftAssignmentList))
-              }
-            >
-              Get availableDates
-            </button>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid
                 container

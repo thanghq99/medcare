@@ -163,8 +163,6 @@ function AppointmentSchedule() {
   else
     return (
       <>
-        <button onClick={() => console.log(getValues())}>get value</button>
-        <button onClick={() => console.log(errors)}>get error</button>
         <PageHeader
           title="Lịch hẹn"
           action={

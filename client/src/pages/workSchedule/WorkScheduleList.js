@@ -34,8 +34,6 @@ function WorkScheduleList({
     const dayOfWeek = dayjs(sa.date).day();
     return { ...sa, dayOfWeek: dayOfWeek };
   });
-  //   console.log(shiftAssignmentList);
-  //   console.log(doctorList);
 
   const deleteShiftAssignment = async (id) => {
     const result = await axios.delete(`/shift-assignment/${id}`);

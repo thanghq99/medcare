@@ -94,7 +94,6 @@ function CreateShiftForm({ shift, triggerReFetch, handleCloseMenu }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={onSubmit}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction="row" spacing={2}>
               <Controller

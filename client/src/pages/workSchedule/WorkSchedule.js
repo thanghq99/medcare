@@ -48,11 +48,6 @@ function WorkSchedule() {
   React.useEffect(() => {
     setLoading(true);
     const getData = async () => {
-      console.log({
-        staffId: getValues("staffId") === "" ? null : getValues("staffId"),
-        shiftId: getValues("shiftId") === "" ? null : getValues("shiftId"),
-        dateList: getValues("dateList"),
-      });
       try {
         const shiftAssignments = await axios.post(
           "/shift-assignment/get-shift-assignment",
@@ -66,7 +61,6 @@ function WorkSchedule() {
 
         const shifts = await axios.get("shift");
         setShiftAssignmentList(shiftAssignments.data.data);
-        console.log(shiftAssignments.data.data);
         setShiftList(shifts.data.data);
         if (isStaffAndNotAdmin()) {
           const doctor = await axios.get(`staff/${user.id}`);

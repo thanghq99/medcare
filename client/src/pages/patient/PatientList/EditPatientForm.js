@@ -122,7 +122,6 @@ function EditPatientForm({ patientData, triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={getData}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box>
               <Typography variant="h6" mt={2} mb={1}>

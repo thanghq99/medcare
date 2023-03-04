@@ -127,7 +127,6 @@ function CreateShiftAssignment({ triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={() => console.log(getValues())}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
               <Grid item xs={6}>

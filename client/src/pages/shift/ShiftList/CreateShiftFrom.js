@@ -90,9 +90,6 @@ function CreateShiftFrom({ triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={() => console.log(parseStartDateTime)}>
-            Get data
-          </button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction="row" spacing={2}>
               <Controller

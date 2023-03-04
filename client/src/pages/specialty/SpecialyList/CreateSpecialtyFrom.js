@@ -74,7 +74,6 @@ function CreateSpecialtyForm({ triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={onSubmit}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="name"
