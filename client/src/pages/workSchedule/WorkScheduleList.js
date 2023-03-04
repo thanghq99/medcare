@@ -88,12 +88,7 @@ function WorkScheduleList({
                               label={`${fsa.shift.startTime.slice(
                                 0,
                                 5
-                              )} - ${fsa.shift.endTime.slice(
-                                0,
-                                5
-                              )} - staffId: ${fsa.staffId} - shiftId: ${
-                                fsa.shiftId
-                              } - day: ${fsa.date}`}
+                              )} - ${fsa.shift.endTime.slice(0, 5)}`}
                               onDelete={
                                 isStaffAndAdmin()
                                   ? () => deleteShiftAssignment(fsa.id)

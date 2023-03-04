@@ -15,51 +15,58 @@ const getAllRecords = async (
   pageSize,
   orderBy,
   order,
-  searchPatientName,
-  searchStaffName,
+  searchSpecialty,
+  searchPatient,
+  searchStaff,
   searchDate
 ) => {
-  const searchStaffNameCondition = () => {
-    if (searchStaffName !== "")
-      return Sequelize.where(
-        Sequelize.fn(
-          "concat",
-          Sequelize.col("first_name"),
-          Sequelize.col("last_name")
-        ),
-        {
-          [Op.iLike]: `%${searchStaffName}%`,
-        }
-      );
-    else return;
+  const searchSpecialtyCondition = () => {
+    if (searchSpecialty !== null) {
+      return {
+        specialty_id: {
+          [Op.eq]: searchSpecialty,
+        },
+      };
+    } else {
+      return {};
+    }
   };
-  const searchPatientNameCondition = () => {
-    if (searchPatientName !== "")
-      return Sequelize.where(
-        Sequelize.fn(
-          "concat",
-          Sequelize.col("first_name"),
-          Sequelize.col("last_name")
-        ),
-        {
-          [Op.iLike]: `%${searchPatientName}%`,
-        }
-      );
-    else return;
+  const searchStaffCondition = () => {
+    if (searchStaff !== null) {
+      return {
+        staff_id: {
+          [Op.eq]: searchStaff,
+        },
+      };
+    } else {
+      return {};
+    }
+  };
+  const searchPatientCondition = () => {
+    if (searchPatient !== null) {
+      return {
+        patient_id: {
+          [Op.eq]: searchPatient,
+        },
+      };
+    } else {
+      return {};
+    }
   };
   const searchDateCondition = () => {
     if (searchDate !== "")
       return {
-        appointment_time: {
+        appointment_date: {
           [Op.eq]: searchDate,
         },
       };
+    else return {};
   };
   const { limit, offset } = getPagination(page, pageSize);
 
   const orderSchema = {
-    appointmentTime: ["appointmentTime"],
-    status: ["name"],
+    appointmentDate: ["appointmentDate"],
+    status: ["status"],
   };
 
   const getOrder = () =>
@@ -68,7 +75,12 @@ const getAllRecords = async (
       : [];
 
   const data = await Record.findAndCountAll({
-    where: searchDateCondition(),
+    where: [
+      searchDateCondition(),
+      searchSpecialtyCondition(),
+      searchStaffCondition(),
+      searchPatientCondition(),
+    ],
     include: [
       {
         model: Staff,
@@ -77,7 +89,6 @@ const getAllRecords = async (
           {
             model: Account,
             as: "account",
-            where: searchStaffNameCondition(),
             attributes: {
               exclude: ["password", "isStaff", "createdAt", "updatedAt"],
             },
@@ -94,7 +105,6 @@ const getAllRecords = async (
           {
             model: Account,
             as: "account",
-            where: searchPatientNameCondition(),
             attributes: {
               exclude: ["password", "isStaff", "createdAt", "updatedAt"],
             },
@@ -112,6 +122,9 @@ const getAllRecords = async (
         },
       },
     ],
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
+    },
     limit,
     offset,
     order: getOrder(),
@@ -124,6 +137,7 @@ const newRecord = async (
   staffId,
   patientId,
   specialtyId,
+  appointmentDate,
   appointmentTime,
   reason
 ) => {
@@ -131,51 +145,17 @@ const newRecord = async (
     staffId: staffId,
     patientId: patientId,
     specialtyId: specialtyId,
+    appointmentDate: appointmentDate,
     appointmentTime: appointmentTime,
     reason: reason,
   });
   return data;
 };
 
-//update single record
-const updateRecord = async (
-  id,
-  staffId,
-  specialtyId,
-  status,
-  appointmentTime,
-  reason,
-  clinicalInformation,
-  height,
-  weight,
-  bloodPressure,
-  heartRate,
-  respirationRate,
-  temperature,
-  diagnose,
-  treatmentDirection
-) => {
-  await Record.update(
-    {
-      staffId: staffId,
-      specialtyId: specialtyId,
-      status: status,
-      appointmentTime: appointmentTime,
-      reason: reason,
-      clinicalInformation: clinicalInformation,
-      height: height,
-      weight: weight,
-      bloodPressure: bloodPressure,
-      heartRate: heartRate,
-      respirationRate: respirationRate,
-      temperature: temperature,
-      diagnose: diagnose,
-      treatmentDirection: treatmentDirection,
-    },
-    {
-      where: { id: id },
-    }
-  );
+const updateRecord = async (id, body) => {
+  await Record.update(body, {
+    where: { id: id },
+  });
   return "";
 };
 
@@ -229,6 +209,9 @@ const getRecord = async (id) => {
         },
       },
     ],
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
+    },
   });
   return data;
 };

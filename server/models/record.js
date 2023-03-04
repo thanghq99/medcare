@@ -52,24 +52,30 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      appointmentDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
       appointmentTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       reason: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "",
       },
       clinicalInformation: {
         type: DataTypes.STRING,
+        defaultValue: "",
       },
       height: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         defaultValue: 0,
       },
       weight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         defaultValue: 0,
       },
@@ -89,15 +95,21 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       temperature: {
-        type: DataTypes.DECIMAL(2, 1),
+        type: DataTypes.DECIMAL,
         allowNull: false,
         defaultValue: 0,
       },
+      doctorNote: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
       diagnose: {
         type: DataTypes.STRING,
+        defaultValue: "",
       },
       treatmentDirection: {
         type: DataTypes.STRING,
+        defaultValue: "",
       },
     },
     {

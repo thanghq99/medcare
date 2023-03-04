@@ -347,6 +347,7 @@ function EditDoctorForm({
                         {...field}
                         fullWidth
                         label="Giá khám"
+                        type="number"
                         error={!!fieldState.error}
                         helperText={fieldState.error?.message}
                         InputProps={{

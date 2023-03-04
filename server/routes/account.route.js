@@ -11,7 +11,11 @@ const router = express.Router();
 router.get("", accountController.getAllAccounts);
 
 //route to create a new account
-router.post("", validate(createAccountSchema), accountController.newAccount);
+router.post(
+  "",
+  // validate(createAccountSchema),
+  accountController.newAccount
+);
 
 //route to get a single account by their account id
 router.get("/:id", accountController.getAccount);
@@ -19,7 +23,7 @@ router.get("/:id", accountController.getAccount);
 //route to update a single account by their account id
 router.put(
   "/:id",
-  validate(updateAccountSchema),
+  // validate(updateAccountSchema),
   accountController.updateAccount
 );
 

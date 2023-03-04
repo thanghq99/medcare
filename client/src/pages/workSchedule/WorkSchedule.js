@@ -66,6 +66,7 @@ function WorkSchedule() {
 
         const shifts = await axios.get("shift");
         setShiftAssignmentList(shiftAssignments.data.data);
+        console.log(shiftAssignments.data.data);
         setShiftList(shifts.data.data);
         if (isStaffAndNotAdmin()) {
           const doctor = await axios.get(`staff/${user.id}`);
