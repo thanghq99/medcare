@@ -14,6 +14,7 @@ import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate, redirect } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const schema = Joi.object({
   email: Joi.string()
@@ -63,15 +64,6 @@ function Signin() {
             justifyContent: "center",
           }}
         >
-          <button onClick={() => login({ id: 1 }, "abc")}>login</button>
-          <button onClick={() => logout()}>logout</button>
-          <button
-            onClick={() => {
-              return redirect("/auth/lay-lai-mat-khau");
-            }}
-          >
-            reredict
-          </button>
           <Typography gutterBottom fontWeight={4} variant="h4">
             Đăng nhập
           </Typography>

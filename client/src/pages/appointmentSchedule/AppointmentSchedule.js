@@ -105,7 +105,7 @@ function AppointmentSchedule() {
           });
           let newPatientList = [];
           newPatientList.push(patient.data.data);
-          setDoctorList(newPatientList);
+          setPatientList(newPatientList);
         } else {
           let patients = await axios.post("patient/get-patients", {
             searchValue: "",

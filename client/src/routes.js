@@ -17,8 +17,21 @@ import AuthPageLayout from "./layout/AuthPageLayout";
 
 import useAuth from "./hooks/useAuth";
 
+const isPatient = (user) => {
+  return user.isStaff === false;
+};
+
+const isStaff = (user) => {
+  return user.isStaff === true && user.isAdmin === false;
+};
+
+const isAdmin = (user) => {
+  return user.isStaff === true && user.isAdmin === true;
+};
+
 const Router = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
+
   return useRoutes([
     {
       path: "/",
@@ -34,7 +47,7 @@ const Router = () => {
         },
         {
           path: "lich-lam-viec",
-          element: <WorkSchedule />,
+          element: isStaff(user) ? <WorkSchedule /> : <ErrorPage />,
         },
         {
           path: "lich-kham",
@@ -42,27 +55,27 @@ const Router = () => {
         },
         {
           path: "bac-si",
-          element: <DoctorList />,
+          element: isAdmin(user) ? <DoctorList /> : <ErrorPage />,
         },
         {
           path: "benh-nhan",
-          element: <PatientList />,
+          element: isAdmin(user) ? <PatientList /> : <ErrorPage />,
         },
         {
           path: "chuyen-khoa",
-          element: <SpecialtyList />,
+          element: isAdmin(user) ? <SpecialtyList /> : <ErrorPage />,
         },
         {
           path: "ca-lam-viec",
-          element: <ShiftList />,
+          element: isAdmin(user) ? <ShiftList /> : <ErrorPage />,
         },
         {
           path: "thuoc",
-          element: <MedicineList />,
+          element: isAdmin(user) ? <MedicineList /> : <ErrorPage />,
         },
         {
           path: "can-lam-sang",
-          element: <SubclinicalList />,
+          element: isAdmin(user) ? <SubclinicalList /> : <ErrorPage />,
         },
       ],
     },

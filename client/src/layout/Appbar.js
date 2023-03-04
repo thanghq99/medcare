@@ -1,57 +1,61 @@
-import React from 'react'
+import React from "react";
 
 import {
-    Box,
-    AppBar,
-    Drawer,
-    Button,
-    Toolbar,
-    IconButton,
-    Avatar,
-  } from "@mui/material";
-  import SearchIcon from "@mui/icons-material/Search";
-  import NotificationsIcon from "@mui/icons-material/Notifications";
-  import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-  import {
-    APPBAR_MOBILE_HEIGHT,
-    APPBAR_DESKTOP_HEIGHT,
-    DRAWER_WIDTH,
-  } from "./layoutDimensions";
+  Box,
+  AppBar,
+  Tooltip,
+  Toolbar,
+  IconButton,
+  Avatar,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
+import {
+  APPBAR_MOBILE_HEIGHT,
+  APPBAR_DESKTOP_HEIGHT,
+  DRAWER_WIDTH,
+} from "./layoutDimensions";
+import useAuth from "../hooks/useAuth";
 
 function Appbar() {
+  const { logout } = useAuth();
   return (
     <AppBar //APPBAR
-        color="default"
+      color="default"
+      sx={{
+        boxShadow: "none",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)", // Fix on Mobile
+        backgroundColor: "rgba(255, 255, 255, 0.72)",
+        width: {
+          lg: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
+        },
+        minHeight: APPBAR_DESKTOP_HEIGHT,
+      }}
+    >
+      <Toolbar
         sx={{
-          boxShadow: "none",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)", // Fix on Mobile
-          backgroundColor: "rgba(255, 255, 255, 0.72)",
-          width: {
-            lg: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
-          },
-          minHeight: APPBAR_DESKTOP_HEIGHT,
+          justifyContent: "space-between",
         }}
       >
-        <Toolbar
-          sx={{
-            justifyContent: "space-between",
-          }}
-        >
+        <Tooltip title="Chức năng đang phát triến" placement="right">
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <Box>
+        </Tooltip>
+
+        <Box>
+          <Tooltip title="Đăng xuất" placement="left">
             <IconButton>
-              <NotificationsIcon />
+              <Avatar>
+                <LogoutIcon onClick={() => logout()} />
+              </Avatar>
             </IconButton>
-            <IconButton>
-              <Avatar>H</Avatar>
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-  )
+          </Tooltip>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
 }
 
-export default Appbar
+export default Appbar;

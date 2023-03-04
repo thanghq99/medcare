@@ -13,6 +13,7 @@ import {
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import navConfig from "./navConfig";
+import useAuth from "../hooks/useAuth";
 
 function NavSubItem({ item, match }) {
   const { title, path } = item;
@@ -60,7 +61,8 @@ function NavSubItem({ item, match }) {
 }
 
 function NavItem({ item, match }) {
-  const { title, path, icon, children } = item;
+  const { user } = useAuth();
+  const { title, path, icon, isStaff, isAdmin, children } = item;
 
   let isRootActive = match(path);
 
@@ -70,56 +72,70 @@ function NavItem({ item, match }) {
     setOpen(!open);
   };
 
-  if (children)
-    return (
-      <>
-        <ListItemButton
-          sx={{
-            height: 48,
-            borderRadius: 2,
-            textTransform: "capitalize",
-            color: isRootActive ? "primary.main" : "",
-          }}
-          onClick={handleOpen}
-        >
-          <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
-            {icon}
-          </ListItemIcon>
-          <ListItemText primary={title}></ListItemText>
-          <ChevronRightIcon
-            sx={{
-              transform: open ? "rotate(90deg)" : "rotate(0)",
-              transition: "0.2s",
-            }}
-          />
-        </ListItemButton>
-        <Collapse in={open}>
-          <List>
-            {children.map((item) => (
-              <NavSubItem key={item.title} item={item} match={match} />
-            ))}
-          </List>
-        </Collapse>
-      </>
-    );
+  const roleBaseNav = () => {
+    if (!isStaff) {
+      return true;
+    }
+    if (!isAdmin) {
+      return isStaff === user.isStaff;
+    }
+    if (isStaff && isAdmin) {
+      return isStaff === user.isStaff && isAdmin === user.isAdmin;
+    }
+  };
 
-  return (
-    <ListItemButton
-      component={NavLink}
-      to={path}
-      sx={{
-        height: 48,
-        borderRadius: 2,
-        textTransform: "capitalize",
-        color: isRootActive ? "primary.main" : "",
-      }}
-    >
-      <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
-        {icon}
-      </ListItemIcon>
-      <ListItemText primary={title}></ListItemText>
-    </ListItemButton>
-  );
+  if (roleBaseNav()) {
+    if (children)
+      return (
+        <>
+          <ListItemButton
+            sx={{
+              height: 48,
+              borderRadius: 2,
+              textTransform: "capitalize",
+              color: isRootActive ? "primary.main" : "",
+            }}
+            onClick={handleOpen}
+          >
+            <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
+              {icon}
+            </ListItemIcon>
+            <ListItemText primary={title}></ListItemText>
+            <ChevronRightIcon
+              sx={{
+                transform: open ? "rotate(90deg)" : "rotate(0)",
+                transition: "0.2s",
+              }}
+            />
+          </ListItemButton>
+          <Collapse in={open}>
+            <List>
+              {children.map((item) => (
+                <NavSubItem key={item.title} item={item} match={match} />
+              ))}
+            </List>
+          </Collapse>
+        </>
+      );
+
+    return (
+      <ListItemButton
+        component={NavLink}
+        to={path}
+        sx={{
+          height: 48,
+          borderRadius: 2,
+          textTransform: "capitalize",
+          color: isRootActive ? "primary.main" : "",
+        }}
+      >
+        <ListItemIcon sx={{ color: isRootActive ? "primary.main" : "" }}>
+          {icon}
+        </ListItemIcon>
+        <ListItemText primary={title}></ListItemText>
+      </ListItemButton>
+    );
+  } else return;
 }
 
 function NavSection() {

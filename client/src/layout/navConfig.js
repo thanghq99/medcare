@@ -1,5 +1,3 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
@@ -10,11 +8,6 @@ import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 const navConfig = [
-  // {
-  //   title: "dashboard",
-  //   path: "/dashboard",
-  //   icon: <DashboardIcon />,
-  // },
   {
     title: "Lịch khám",
     path: "/lich-kham",
@@ -24,52 +17,50 @@ const navConfig = [
     title: "Bác sĩ",
     path: "/bac-si",
     icon: <SupervisorAccountIcon />,
+    isStaff: true,
+    isAdmin: true,
   },
   {
     title: "Bệnh nhân",
     path: "/benh-nhan",
     icon: <PeopleAltIcon />,
+    isStaff: true,
+    isAdmin: true,
   },
   {
     title: "Lịch làm việc",
     path: "/lich-lam-viec",
     icon: <CalendarMonthIcon />,
+    isStaff: true,
   },
   {
     title: "Ca làm việc",
     path: "/ca-lam-viec",
     icon: <WorkHistoryIcon />,
+    isStaff: true,
+    isAdmin: true,
   },
   {
     title: "Chuyên khoa",
     path: "/chuyen-khoa",
     icon: <Groups3Icon />,
+    isStaff: true,
+    isAdmin: true,
   },
   {
     title: "Thuốc",
     path: "/thuoc",
     icon: <MedicationIcon />,
+    isStaff: true,
+    isAdmin: true,
   },
   {
     title: "Cận lâm sàng",
     path: "/can-lam-sang",
     icon: <MedicalServicesIcon />,
+    isStaff: true,
+    isAdmin: true,
   },
-  // {
-  //   title: "Bài viết",
-  //   path: "/bai-viet",
-  //   icon: <LibraryBooksIcon />,
-  //   children: [
-  //     {
-  //       title: "Danh sách",
-  //       path: "/bai-viet/danh-sach",
-  //     },
-  //     {
-  //       title: "Tạo mới",
-  //       path: "/bai-viet/tao-moi",
-  //     },
-  //   ],
-  // },
 ];
 
 export default navConfig;

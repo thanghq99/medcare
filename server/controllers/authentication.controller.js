@@ -47,6 +47,8 @@ const login = async (req, res, next) => {
         isAdmin: data.staffDetails.isAdmin ? data.staffDetails.isAdmin : false,
         staffId: data.staffDetails?.id,
         patientId: data.patientDetails?.id,
+        firstName: data.firstName,
+        lastName: data.lastName,
       };
       // Create the access token
       console.log(
