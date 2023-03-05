@@ -5,6 +5,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { DRAWER_WIDTH } from "./layoutDimensions";
 import NavSection from "./NavSection";
 import useAuth from "../hooks/useAuth";
+import Logo from "./logo3.jpg";
 
 function IconDoctor(props) {
   return (
@@ -76,14 +77,14 @@ function Sidebar() {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Box
+            {/* <Box
               sx={{
                 width: "40px",
                 height: "40px",
-                cursor: "pointer",
               }}
             >
               <svg
@@ -132,10 +133,20 @@ function Sidebar() {
                   ></path>
                 </g>
               </svg>
-            </Box>
-            <IconButton>
+              <img src={<Logo></Logo>}></img>
+            </Box> */}
+            {/* <IconButton>
               <ChevronLeftIcon />
-            </IconButton>
+            </IconButton> */}
+            <img src={Logo} style={{ height: "50px", width: "50px" }}></img>
+            <Typography
+              variant="h5"
+              fontFamily="sans-serif"
+              fontWeight="600"
+              ml={1}
+            >
+              MEDCARE
+            </Typography>
           </Box>
           <Box
             sx={{

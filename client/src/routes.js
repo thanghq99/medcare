@@ -47,7 +47,8 @@ const Router = () => {
         },
         {
           path: "lich-lam-viec",
-          element: isStaff(user) ? <WorkSchedule /> : <ErrorPage />,
+          element:
+            isStaff(user) || isAdmin(user) ? <WorkSchedule /> : <ErrorPage />,
         },
         {
           path: "lich-kham",
