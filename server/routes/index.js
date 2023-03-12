@@ -15,9 +15,33 @@ const shiftAssignmentRoute = require("./shiftAssignment.route.js");
 const authenticationRoute = require("./authentication.route.js");
 
 const jwtVerifying = require("../middlewares/jwtVerifying");
+const db = require("../models/index.js");
+const { newAccount } = require("../services/account.service.js");
 
 router.get("/", (req, res) => {
   res.json("Medcare api.");
+});
+
+router.get("/init-db", async (req, res) => {
+  await db.sequelize.sync({ force: true });
+  await newAccount({
+    firstName: "admin",
+    lastName: "admin",
+    email: "haikhauak@gmail.com",
+    password: "123",
+    phoneNumber: "0111222333",
+    dob: "1999/04/02",
+    gender: "M",
+    address: "",
+    isStaff: true,
+    isDisabled: false,
+    degreeId: null,
+    specialtyId: null,
+    examinationFee: 0,
+    isAdmin: true,
+    healthHistory: "",
+    familyHealthHistory: "",
+  });
 });
 
 // router.use("/demo", demoRoute);
