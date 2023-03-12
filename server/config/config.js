@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
   development: {
@@ -9,8 +9,8 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
     define: {
-      underscored: true
-    }
+      underscored: true,
+    },
   },
   test: {
     username: process.env.USERNAME_TEST,
@@ -18,14 +18,17 @@ module.exports = {
     database: process.env.DATABASE_TEST,
     host: process.env.HOST_TEST,
     port: process.env.PORT_TEST,
-    dialect: process.env.DIALECT_TEST
+    dialect: process.env.DIALECT_TEST,
   },
   production: {
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    host: process.env.HOST,
-    port: process.env.PORT,
-    dialect: process.env.DIALECT
-  }
+    username: process.env.DB_USERNAME_PRODUCT,
+    password: process.env.DB_PASSWORD_PRODUCT,
+    database: process.env.DB_DATABASE_PRODUCT,
+    host: process.env.DB_HOST_PRODUCT,
+    port: process.env.DB_PORT_PRODUCT,
+    dialect: process.env.DB_DIALECT_PRODUCT,
+    define: {
+      underscored: true,
+    },
+  },
 };
