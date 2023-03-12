@@ -11,7 +11,8 @@ const appRoute = require("./routes");
 const generalErrorHandling = require("./middlewares/generalErrorHandling");
 
 const app = express();
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
