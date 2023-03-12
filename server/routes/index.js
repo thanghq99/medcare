@@ -42,6 +42,7 @@ router.get("/init-db", async (req, res) => {
     healthHistory: "",
     familyHealthHistory: "",
   });
+  res.json("DB initialized with one admin account");
 });
 
 // router.use("/demo", demoRoute);
