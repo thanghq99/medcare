@@ -16,6 +16,7 @@ import RenewPassword from "./pages/authPages/RenewPassword";
 import AuthPageLayout from "./layout/AuthPageLayout";
 
 import useAuth from "./hooks/useAuth";
+import ChangePassword from "./pages/authPages/ChangePassword";
 
 const isPatient = (user) => {
   return user.isStaff === false;
@@ -95,6 +96,10 @@ const Router = () => {
         {
           path: "lay-lai-mat-khau",
           element: <RenewPassword />,
+        },
+        {
+          path: "doi-mat-khau",
+          element: <ChangePassword />,
         },
         {
           path: "",

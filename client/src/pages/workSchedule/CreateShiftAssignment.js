@@ -128,7 +128,7 @@ function CreateShiftAssignment({ triggerReFetch }) {
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} mt={1}>
               <Grid item xs={6}>
                 <Controller
                   name="staffId"

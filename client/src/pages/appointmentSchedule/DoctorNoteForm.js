@@ -86,6 +86,7 @@ function AppointmentEditForm({ appointment, triggerReFetch }) {
                 control={control}
                 render={({ field, fieldState }) => (
                   <TextField
+                    sx={{ mt: 1 }}
                     {...field}
                     fullWidth
                     label="Lời nhắn cho bệnh nhân"

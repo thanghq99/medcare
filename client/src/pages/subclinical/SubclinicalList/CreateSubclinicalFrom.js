@@ -78,7 +78,6 @@ function CreateSubclinicalForm({ triggerReFetch }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <button onClick={onSubmit}>Get data</button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>

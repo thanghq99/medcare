@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const MedicineService = require("../services/Medicine.service.js");
+const MedicineService = require("../services/medicine.service");
 
 /** Controller to get all Medicines available */
 const getAllMedicines = async (req, res, next) => {

@@ -182,6 +182,7 @@ function AppointmentSchedule() {
               <Grid item xs={12} sm={6} lg={2.5}>
                 {user.isStaff === true && user.isAdmin === false ? (
                   <TextField
+                    fullWidth
                     disabled
                     defaultValue={`${doctorList[0].specialty.name}`}
                   />
@@ -213,6 +214,7 @@ function AppointmentSchedule() {
               <Grid item xs={12} sm={6} lg={3}>
                 {user.isStaff === true && user.isAdmin === false ? (
                   <TextField
+                    fullWidth
                     disabled
                     defaultValue={`${doctorList[0].account.firstName} ${doctorList[0].account.lastName}`}
                   />
@@ -246,6 +248,7 @@ function AppointmentSchedule() {
               <Grid item xs={12} sm={6} lg={3}>
                 {user.isStaff === false ? (
                   <TextField
+                    fullWidth
                     disabled
                     defaultValue={`${patientList[0].account.firstName} ${patientList[0].account.lastName}`}
                   />
