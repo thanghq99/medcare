@@ -22,11 +22,15 @@ const schema = Joi.object({
     .email({ tlds: { allow: false } })
     .required(),
   password: Joi.string().required(),
+  confirmPassword: Joi.string().required(),
+  newPassword: Joi.string().required(),
 });
 
 const defaultValues = {
   email: "",
   password: "",
+  confirmPassword: "",
+  newPassword: "",
 };
 
 function ChangePassword() {
@@ -45,9 +49,8 @@ function ChangePassword() {
 
   const onSubmit = async (data) => {
     try {
-      //   const result = await axios.post("authentication/changePassword", data);
-      //   console.log(result.data.data);
-      //   login(result.data.data.user, result.data.data.accessToken);
+      const result = await axios.post("authentication/change-password", data);
+      navigate("/auth/dang-nhap");
       console.log("password changed");
     } catch (error) {
       console.log("cant change password ", error);

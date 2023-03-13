@@ -85,7 +85,7 @@ const renewPassword = async (req, res, next) => {
       });
     } else {
       const newRandomPassword = Math.random().toString(36).substring(2, 8);
-      const result = await AccountService.renewPassword(
+      const result = await AccountService.changePassword(
         account.id,
         newRandomPassword
       );
@@ -103,8 +103,44 @@ const renewPassword = async (req, res, next) => {
   }
 };
 
+/** Controller to login */
+const changePassword = async (req, res, next) => {
+  const { email, password, confirmPassword, newPassword } = req.body;
+  if (password !== confirmPassword) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      code: StatusCodes.BAD_REQUEST,
+      data: null,
+      message: "Confirm password is not correct",
+    });
+  } else {
+    try {
+      const account = await AccountService.findOneByEmailPassword(req.body);
+      if (account === null)
+        res.status(StatusCodes.UNAUTHORIZED).json({
+          code: StatusCodes.UNAUTHORIZED,
+          data: null,
+          message: "Email or old password is not correct",
+        });
+      else {
+        const result = await AccountService.changePassword(
+          account.id,
+          newPassword
+        );
+        res.status(StatusCodes.CREATED).json({
+          code: StatusCodes.CREATED,
+          data: null,
+          message: "Password changed successfully",
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+};
+
 module.exports = {
   register,
   login,
   renewPassword,
+  changePassword,
 };

@@ -11,5 +11,6 @@ const router = express.Router();
 router.post("/register", authenticationController.register);
 router.post("/login", authenticationController.login);
 router.post("/renew-password", authenticationController.renewPassword);
+router.post("/change-password", authenticationController.changePassword);
 
 module.exports = router;

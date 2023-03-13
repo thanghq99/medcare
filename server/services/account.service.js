@@ -108,8 +108,8 @@ const updateAccount = async (id, body) => {
   return body;
 };
 
-//renew password
-const renewPassword = async (id, password) => {
+//change password
+const changePassword = async (id, password) => {
   await Account.update(
     {
       password: password,
@@ -161,7 +161,7 @@ module.exports = {
   findOneByEmailPassword,
   getAccount,
   updateAccount,
-  renewPassword,
+  changePassword,
   deleteAccount,
   toggleIsDisabled,
 };
