@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const RecordService = require("../services/record.service.js");
 const dayjs = require("dayjs");
 var utc = require("dayjs/plugin/utc");
+const { updateRecordMailer } = require("../services/mail.service.js");
 dayjs.extend(utc);
 
 /** Controller to get all records available */
@@ -89,9 +90,26 @@ const newRecord = async (req, res, next) => {
 const updateRecord = async (req, res, next) => {
   try {
     const data = await RecordService.updateRecord(req.params.id, req.body);
+    const newRecord = await RecordService.getRecord(req.params.id);
+
+    const statusConverter = () => {
+      if (newRecord.status === "requested") return "Đã yêu cầu";
+      else if (newRecord.status === "accepted") return "Đã chấp nhận";
+      else if (newRecord.status === "canceled") return "Đã hủy/từ chối";
+      else if (newRecord.status === "done") return "Đã hoàn thành";
+    };
+
+    updateRecordMailer(
+      newRecord.patient.account.email,
+      statusConverter(),
+      newRecord.appointmentDate,
+      newRecord.appointmentTime,
+      newRecord.doctorNote ? newRecord.doctorNote : "Không có",
+      newRecord.diagnose ? newRecord.diagnose : "Chưa có"
+    );
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
-      data: data,
+      data: newRecord,
       message: "Record updated successfully",
     });
   } catch (error) {

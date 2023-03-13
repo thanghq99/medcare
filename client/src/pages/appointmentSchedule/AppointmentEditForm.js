@@ -175,7 +175,7 @@ function AppointmentEditForm({ appointment, triggerReFetch }) {
                           }
                           label="Ngày"
                           views={["day"]}
-                          minDate={dayjs()}
+                          minDate={dayjs().add(1, "day")}
                           maxDate={dayjs().add(1, "month")}
                           onChange={(e) => {
                             field.onChange(e.format("YYYY-MM-DD"));
