@@ -147,7 +147,7 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Tên"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập tên"}
                       />
                     )}
                   />
@@ -162,7 +162,7 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Họ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập họ"}
                       />
                     )}
                   />
@@ -187,7 +187,7 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                           />
                         </RadioGroup>
                         <FormHelperText>
-                          {fieldState.error?.message}
+                          {fieldState.error?.message && "Cần chọn giới tính"}
                         </FormHelperText>
                       </FormControl>
                     )}
@@ -215,7 +215,10 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                                 fullWidth
                                 onKeyDown={onKeyDown}
                                 error={!!fieldState.error}
-                                helperText={fieldState.error?.message}
+                                helperText={
+                                  fieldState.error?.message &&
+                                  "Cần chọn ngày sinh"
+                                }
                               />
                             </>
                           )}
@@ -241,7 +244,10 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Email"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập email đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -256,7 +262,9 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Mật khẩu"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập mật khẩu"
+                        }
                       />
                     )}
                   />
@@ -278,7 +286,10 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Số điện thoại"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập số diện thoại đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -293,7 +304,9 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
                         fullWidth
                         label="Địa chỉ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập địa chỉ"
+                        }
                       />
                     )}
                   />

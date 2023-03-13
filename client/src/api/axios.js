@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://medcare-api-hrsp.onrender.com/api";
+// const BASE_URL = "https://medcare-api-hrsp.onrender.com/api";
+const BASE_URL = "http://localhost:3001/api";
 
 const publicAPI = axios.create({
   baseURL: BASE_URL,

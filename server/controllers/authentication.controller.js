@@ -10,6 +10,7 @@ const register = async (req, res, next) => {
   try {
     let data = await AccountService.findOneByEmail(req.body.email);
     if (data) {
+      await transaction.rollback();
       res.status(StatusCodes.CONFLICT).json({
         code: StatusCodes.CONFLICT,
         data: data,
@@ -49,6 +50,7 @@ const login = async (req, res, next) => {
         patientId: data.patientDetails?.id,
         firstName: data.firstName,
         lastName: data.lastName,
+        fullDetails: data,
       };
       // Create the access token
       console.log(

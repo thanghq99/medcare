@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { sequelize } = require("../models/index.js");
 const AccountService = require("../services/account.service.js");
+const PatientService = require("../services/patient.service.js");
 
 /** Controller to get all accounts available */
 const getAllAccounts = async (req, res, next) => {
@@ -36,6 +37,7 @@ const newAccount = async (req, res, next) => {
   try {
     let data = await AccountService.findOneByEmail(req.body.email);
     if (data) {
+      await t.rollback();
       res.status(StatusCodes.CONFLICT).json({
         code: StatusCodes.CONFLICT,
         data: data,
@@ -58,14 +60,40 @@ const newAccount = async (req, res, next) => {
 
 /** Controller to update a account */
 const updateAccount = async (req, res, next) => {
+  const patientData = {
+    healthHistory: req.body.healthHistory,
+    familyHealthHistory: req.body.familyHealthHistory,
+  };
+  const accountData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    dob: req.body.dob,
+    gender: req.body.gender,
+    address: req.body.address,
+  };
   try {
-    const data = await AccountService.updateAccount(req.params.id, req.body);
+    transaction = await sequelize.transaction();
+    const updatePatientResult = await PatientService.updatePatient(
+      req.body.patientId,
+      patientData
+    );
+    const updateAccountResult = await AccountService.updateAccount(
+      req.params.id,
+      accountData
+    );
+
+    await transaction.commit();
     res.status(StatusCodes.ACCEPTED).json({
       code: StatusCodes.ACCEPTED,
-      data: data,
+      data: { updatePatientResult, updateAccountResult },
       message: "Account updated successfully",
     });
   } catch (error) {
+    if (transaction) {
+      await transaction.rollback();
+    }
     next(error);
   }
 };

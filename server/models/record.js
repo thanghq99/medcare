@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
       Record.belongsToMany(models.Medicine, {
-        through: "record_medicine",
+        through: models.RecordMedicine,
       });
       Record.belongsToMany(models.Subclinical, {
         through: models.RecordSubclinical,

@@ -16,6 +16,7 @@ import {
   DRAWER_WIDTH,
 } from "./layoutDimensions";
 import useAuth from "../hooks/useAuth";
+import AccountDetails from "../components/AccountDetails";
 
 function Appbar() {
   const { logout } = useAuth();
@@ -38,14 +39,15 @@ function Appbar() {
           justifyContent: "space-between",
         }}
       >
-        <Tooltip title="Chức năng đang phát triến" placement="right">
+        <Tooltip title="Chức năng đang phát triến" placement="bottom">
           <IconButton>
             <SearchIcon />
           </IconButton>
         </Tooltip>
 
         <Box>
-          <Tooltip title="Đăng xuất" placement="left">
+          <AccountDetails />
+          <Tooltip title="Đăng xuất" placement="bottom">
             <IconButton>
               <Avatar>
                 <LogoutIcon onClick={() => logout()} />

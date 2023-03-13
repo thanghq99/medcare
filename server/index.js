@@ -26,7 +26,7 @@ app.listen(PORT, async (error) => {
       await db.sequelize.authenticate();
       console.log("Connected to database.");
 
-      // await db.sequelize.sync({ force: true });
+      // await db.sequelize.sync({ alter: true });
       // console.log("Database synced. DEV STAGE ONLY!");
     } catch (error) {
       console.error("Unable to connect to the database:", error);

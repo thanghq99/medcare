@@ -184,7 +184,10 @@ function AppointmentSchedule() {
                   <TextField
                     fullWidth
                     disabled
-                    defaultValue={`${doctorList[0].specialty.name}`}
+                    defaultValue={`${
+                      doctorList[0].specialty?.name ||
+                      "Bác sĩ chưa có chuyên khoa"
+                    }`}
                   />
                 ) : (
                   <Autocomplete

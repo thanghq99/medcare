@@ -140,7 +140,7 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Tên"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập tên"}
                       />
                     )}
                   />
@@ -155,7 +155,7 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Họ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập họ"}
                       />
                     )}
                   />
@@ -180,7 +180,7 @@ function CreatePatientForm({ triggerReFetch }) {
                           />
                         </RadioGroup>
                         <FormHelperText>
-                          {fieldState.error?.message}
+                          {fieldState.error?.message && "Cần chọn giới tính"}
                         </FormHelperText>
                       </FormControl>
                     )}
@@ -208,7 +208,10 @@ function CreatePatientForm({ triggerReFetch }) {
                                 fullWidth
                                 onKeyDown={onKeyDown}
                                 error={!!fieldState.error}
-                                helperText={fieldState.error?.message}
+                                helperText={
+                                  fieldState.error?.message &&
+                                  "Cần chọn ngày sinh"
+                                }
                               />
                             </>
                           )}
@@ -234,7 +237,10 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Email"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &
+                          "Cần nhập email đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -249,7 +255,9 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Mật khẩu"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập mật khẩu"
+                        }
                       />
                     )}
                   />
@@ -271,7 +279,10 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Số điện thoại"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập số diện thoại đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -286,7 +297,9 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Địa chỉ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập địa chỉ"
+                        }
                       />
                     )}
                   />
@@ -308,7 +321,10 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Tiền sử bệnh cá nhân"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập tiền sử bệnh cá nhân"
+                        }
                       />
                     )}
                   />
@@ -323,7 +339,10 @@ function CreatePatientForm({ triggerReFetch }) {
                         fullWidth
                         label="Tiền sử bệnh gia đình"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập tiền sử bệnh của gia đình"
+                        }
                       />
                     )}
                   />

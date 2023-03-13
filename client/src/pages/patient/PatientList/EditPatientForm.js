@@ -138,7 +138,7 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Tên"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập tên"}
                       />
                     )}
                   />
@@ -153,7 +153,7 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Họ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={fieldState.error?.message && "Cần nhập họ"}
                       />
                     )}
                   />
@@ -178,7 +178,7 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                           />
                         </RadioGroup>
                         <FormHelperText>
-                          {fieldState.error?.message}
+                          {fieldState.error?.message && "Cần chọn giới tính"}
                         </FormHelperText>
                       </FormControl>
                     )}
@@ -206,7 +206,10 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                                 fullWidth
                                 onKeyDown={onKeyDown}
                                 error={!!fieldState.error}
-                                helperText={fieldState.error?.message}
+                                helperText={
+                                  fieldState.error?.message &&
+                                  "Cần chọn ngày sinh"
+                                }
                               />
                             </>
                           )}
@@ -232,7 +235,10 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Email"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập email đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -255,7 +261,10 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Số điện thoại"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập số diện thoại đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -270,7 +279,9 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Địa chỉ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập địa chỉ"
+                        }
                       />
                     )}
                   />
@@ -279,7 +290,7 @@ function EditPatientForm({ patientData, triggerReFetch }) {
             </Box>
             <Box>
               <Typography variant="h6" mt={2} mb={1}>
-                Thông tin nghề nghiệp
+                Thông tin sức khỏe
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -292,7 +303,10 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Tiền sử bệnh cá nhân"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập tiền sử bệnh cá nhân"
+                        }
                       />
                     )}
                   />
@@ -307,7 +321,10 @@ function EditPatientForm({ patientData, triggerReFetch }) {
                         fullWidth
                         label="Tiền sử bệnh gia đình"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập tiền sử bệnh của gia đình"
+                        }
                       />
                     )}
                   />

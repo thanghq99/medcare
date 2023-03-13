@@ -10,7 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 
-import axios from "./../../api/axios";
+import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 

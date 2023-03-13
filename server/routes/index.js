@@ -12,6 +12,8 @@ const specialtyRoute = require("./specialty.route.js");
 const degreeRoute = require("./degree.route.js");
 const shiftRoute = require("./shift.route.js");
 const shiftAssignmentRoute = require("./shiftAssignment.route.js");
+const recordMedicineRoute = require("./recordMedicine.route.js");
+const recordSubclinicalRoute = require("./recordSubclinical.route.js");
 const authenticationRoute = require("./authentication.route.js");
 
 const jwtVerifying = require("../middlewares/jwtVerifying");
@@ -56,6 +58,8 @@ router.use("/specialty", jwtVerifying, specialtyRoute);
 router.use("/degree", jwtVerifying, degreeRoute);
 router.use("/shift", jwtVerifying, shiftRoute);
 router.use("/shift-assignment", jwtVerifying, shiftAssignmentRoute);
+router.use("/record-medicine", jwtVerifying, recordMedicineRoute);
+router.use("/record-subclinical", jwtVerifying, recordSubclinicalRoute);
 router.use("/authentication", authenticationRoute);
 
 module.exports = router;

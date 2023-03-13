@@ -82,10 +82,13 @@ function CreateSpecialtyForm({ specialty, triggerReFetch }) {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
+                  sx={{ mt: 1 }}
                   fullWidth
                   label="Tên chuyên khoa"
                   error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
+                  helperText={
+                    fieldState.error?.message && "Cần nhập tên chuyên khoa"
+                  }
                 />
               )}
             />

@@ -81,10 +81,11 @@ function CreateMedicineForm({ triggerReFetch }) {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
+                  sx={{ mt: 1 }}
                   fullWidth
                   label="Tên thuốc"
                   error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
+                  helperText={fieldState.error?.message && "Cần nhập tên thuốc"}
                 />
               )}
             />

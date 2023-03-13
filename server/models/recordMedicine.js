@@ -1,25 +1,25 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class RecordSubclinical extends Model {
+  class RecordMedicine extends Model {
     static associate(models) {
-      RecordSubclinical.belongsTo(models.Record, {
+      RecordMedicine.belongsTo(models.Record, {
         as: "record",
         foreignKey: {
           name: "recordId",
           field: "record_id",
         },
       });
-      RecordSubclinical.belongsTo(models.Subclinical, {
-        as: "subclinical",
+      RecordMedicine.belongsTo(models.Medicine, {
+        as: "medicine",
         foreignKey: {
-          name: "subclinicalId",
-          field: "subclinical_id",
+          name: "medicineId",
+          field: "medicine_id",
         },
       });
     }
   }
-  RecordSubclinical.init(
+  RecordMedicine.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -35,25 +35,25 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      subclinicalId: {
+      medicineId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Subclinical",
+          model: "Medicine",
           key: "id",
         },
       },
-      currentExaminationFee: {
-        type: DataTypes.INTEGER,
+      note: {
+        type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: "",
       },
     },
     {
       sequelize,
-      modelName: "RecordSubclinical",
-      tableName: "record_subclinical",
+      modelName: "RecordMedicine",
+      tableName: "record_medicine",
     }
   );
-  return RecordSubclinical;
+  return RecordMedicine;
 };

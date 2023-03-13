@@ -29,6 +29,15 @@ export const AuthProvider = ({ children }) => {
     setAccessToken("");
   };
 
+  const updateAccountDetails = (newAccountDetails) => {
+    const newUserData = user;
+    newUserData.firstName = newAccountDetails.firstName;
+    newUserData.lastName = newAccountDetails.lastName;
+    newUserData.fullDetails = newAccountDetails;
+    localStorage.setItem("user", JSON.stringify(newUserData));
+    setUser(newUserData);
+  };
+
   function isLoggedIn() {
     return accessToken ? true : false;
   }
@@ -44,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         setAccessToken,
         login,
         logout,
+        updateAccountDetails,
         isLoggedIn,
       }}
     >

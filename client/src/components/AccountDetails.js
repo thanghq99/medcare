@@ -14,11 +14,11 @@ import {
   FormControlLabel,
   Radio,
   FormHelperText,
-  Switch,
-  MenuItem,
-  InputAdornment,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import SettingsIcon from "@mui/icons-material/Settings";
+
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -30,9 +30,12 @@ import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 
-import axios from "../../../api/axios";
+import axios from "../api/axios";
 
-import AlertDialog from "../../../components/AlertModal";
+import AlertDialog from "./AlertModal";
+
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -44,37 +47,28 @@ const schema = Joi.object({
   dob: Joi.date().required(),
   gender: Joi.string().min(1).max(1).required(),
   address: Joi.string().allow(""),
-  isStaff: Joi.boolean().required(),
-  degree: Joi.number().required().allow("", null),
-  specialty: Joi.number().required().allow("", null),
-  examinationFee: Joi.number().required(),
-  isAdmin: Joi.boolean().default(false).required(),
+  healthHistory: Joi.string().allow(""),
+  familyHealthHistory: Joi.string().allow(""),
 });
 
-function EditDoctorForm({
-  staffData,
-  specialtyList,
-  degreeList,
-  triggerReFetch,
-}) {
+function AccountDetails() {
   dayjs.extend(utc);
+  const navigate = useNavigate();
 
+  const { user, updateAccountDetails } = useAuth();
   const [open, setOpen] = React.useState(false);
 
-  const { id, degree, specialty, examinationFee, isAdmin, account } = staffData;
+  const { fullDetails } = user;
   const defaultValues = {
-    firstName: account.firstName,
-    lastName: account.lastName,
-    email: account.email,
-    phoneNumber: account.phoneNumber,
-    dob: account.dob,
-    gender: account.gender,
-    address: account.address,
-    isStaff: true,
-    degree: degree === null ? "" : degree.id,
-    specialty: specialty === null ? "" : specialty.id,
-    examinationFee: examinationFee,
-    isAdmin: isAdmin,
+    firstName: fullDetails.firstName,
+    lastName: fullDetails.lastName,
+    email: fullDetails.email,
+    phoneNumber: fullDetails.phoneNumber,
+    dob: fullDetails.dob,
+    gender: fullDetails.gender,
+    address: fullDetails.address,
+    healthHistory: fullDetails.patientDetails.healthHistory,
+    familyHealthHistory: fullDetails.patientDetails.familyHealthHistory,
   };
 
   const {
@@ -88,26 +82,18 @@ function EditDoctorForm({
     resolver: joiResolver(schema),
   });
 
-  const getData = () => {
-    console.log(errors);
-  };
-
   const onSubmit = async (data) => {
     let submitData = getValues();
-    submitData.accountId = account.id;
-    submitData.degree = submitData.degree === "" ? null : submitData.degree;
-    submitData.specialty =
-      submitData.specialty === "" ? null : submitData.specialty;
-    submitData.examinationFee = parseInt(submitData.examinationFee);
+    submitData.patientId = user.patientId;
     console.log("submit data", submitData);
 
     try {
-      const result = await axios.put(`staff/${id}`, submitData);
-      console.log("staff updated", result);
-      triggerReFetch();
-      handleClose();
+      const result = await axios.put(`account/${user.id}`, submitData);
+      const newAccountDetails = await axios.get(`account/${user.id}`);
+      updateAccountDetails(newAccountDetails.data.data);
+      navigate(0);
     } catch (error) {
-      console.log("cant create staff", error);
+      console.log("cant update account", error);
       handleClose();
     }
   };
@@ -127,14 +113,19 @@ function EditDoctorForm({
 
   return (
     <>
-      <MenuItem disableRipple dense onClick={handleOpen}>
-        <EditIcon sx={{ mr: 2 }} />
-        Xem & Chỉnh sửa
-      </MenuItem>
+      <Tooltip
+        title="Chỉnh sửa thông tin cá nhân"
+        placement="bottom"
+        onClick={handleOpen}
+      >
+        <IconButton>
+          <SettingsIcon />
+        </IconButton>
+      </Tooltip>
       <Dialog disableEscapeKeyDown fullWidth maxWidth="md" open={open}>
         <DialogTitle>
           <Typography variant="h5" component="p">
-            Chỉnh sửa thông tin bác sĩ
+            Chỉnh sửa thông tin cá nhân
           </Typography>
         </DialogTitle>
         <DialogContent>
@@ -277,7 +268,10 @@ function EditDoctorForm({
                         fullWidth
                         label="Số điện thoại"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message &&
+                          "Cần nhập số diện thoại đúng định dạng"
+                        }
                       />
                     )}
                   />
@@ -292,95 +286,60 @@ function EditDoctorForm({
                         fullWidth
                         label="Địa chỉ"
                         error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
+                        helperText={
+                          fieldState.error?.message && "Cần nhập địa chỉ"
+                        }
                       />
                     )}
                   />
                 </Grid>
               </Grid>
             </Box>
-            <Box>
-              <Typography variant="h6" mt={2} mb={1}>
-                Thông tin nghề nghiệp
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Controller
-                    name="specialty"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        fullWidth
-                        label="Chuyên khoa"
-                      >
-                        <MenuItem value="">Không có</MenuItem>
-                        {specialtyList &&
-                          specialtyList.map((s) => (
-                            <MenuItem key={s.id} value={s.id}>
-                              {s.name}
-                            </MenuItem>
-                          ))}
-                      </TextField>
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Controller
-                    name="degree"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField {...field} select fullWidth label="Bằng cấp">
-                        <MenuItem value="">Không có</MenuItem>
-                        {degreeList &&
-                          degreeList.map((s) => (
-                            <MenuItem key={s.id} value={s.id}>
-                              {s.name}
-                            </MenuItem>
-                          ))}
-                      </TextField>
-                    )}
-                  />
-                </Grid>{" "}
-                <Grid item xs={6}>
-                  <Controller
-                    name="examinationFee"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="Giá khám"
-                        type="number"
-                        error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">VND</InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Controller
-                    name="isAdmin"
-                    control={control}
-                    render={({ field }) => (
-                      <>
-                        <FormLabel id={`isAdmin`}>Nhân viên quản lý</FormLabel>
-                        <Switch
-                          onChange={(e) => field.onChange(e.target.checked)}
-                          checked={field.value}
+            {user.isStaff === false && (
+              <Box>
+                <Typography variant="h6" mt={2} mb={1}>
+                  Thông tin sức khỏe
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Controller
+                      name="healthHistory"
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          label="Tiền sử bệnh cá nhân"
+                          error={!!fieldState.error}
+                          helperText={
+                            fieldState.error?.message &&
+                            "Cần nhập tiền sử bệnh cá nhân"
+                          }
                         />
-                      </>
-                    )}
-                  />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Controller
+                      name="familyHealthHistory"
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          label="Tiền sử bệnh gia đình"
+                          error={!!fieldState.error}
+                          helperText={
+                            fieldState.error?.message &&
+                            "Cần nhập tiền sử bệnh của gia đình"
+                          }
+                        />
+                      )}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            )}
           </form>
         </DialogContent>
         <DialogActions>
@@ -390,7 +349,7 @@ function EditDoctorForm({
             <Button onClick={handleClose}>Hủy</Button>
           )}
           <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-            Chỉnh sửa
+            Cập nhật
           </Button>
         </DialogActions>
       </Dialog>
@@ -398,4 +357,4 @@ function EditDoctorForm({
   );
 }
 
-export default EditDoctorForm;
+export default AccountDetails;

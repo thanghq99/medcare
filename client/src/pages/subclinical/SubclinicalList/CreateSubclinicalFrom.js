@@ -79,7 +79,7 @@ function CreateSubclinicalForm({ triggerReFetch }) {
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} mt={1}>
               <Grid item xs={12}>
                 <Controller
                   name="name"
@@ -90,7 +90,9 @@ function CreateSubclinicalForm({ triggerReFetch }) {
                       fullWidth
                       label="Tên cận lâm sàng"
                       error={!!fieldState.error}
-                      helperText={fieldState.error?.message}
+                      helperText={
+                        fieldState.error?.message && "Cần nhập tên cận lâm sàng"
+                      }
                     />
                   )}
                 />
@@ -105,7 +107,10 @@ function CreateSubclinicalForm({ triggerReFetch }) {
                       fullWidth
                       label="Phí thực hiện cận lâm sàng"
                       error={!!fieldState.error}
-                      helperText={fieldState.error?.message}
+                      helperText={
+                        fieldState.error?.message &&
+                        "Cần nhập phí thực hiện cận lâm sàng"
+                      }
                     />
                   )}
                 />

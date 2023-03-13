@@ -91,7 +91,7 @@ function CreateShiftFrom({ triggerReFetch }) {
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} mt={1}>
               <Controller
                 name="startTime"
                 control={control}
@@ -111,7 +111,10 @@ function CreateShiftFrom({ triggerReFetch }) {
                           fullWidth
                           onKeyDown={onKeyDown}
                           error={!!fieldState.error}
-                          helperText={fieldState.error?.message}
+                          helperText={
+                            fieldState.error?.message &&
+                            "Cần chọn thời gian bắt đầu"
+                          }
                         />
                       )}
                     />
@@ -137,7 +140,10 @@ function CreateShiftFrom({ triggerReFetch }) {
                           fullWidth
                           onKeyDown={onKeyDown}
                           error={!!fieldState.error}
-                          helperText={fieldState.error?.message}
+                          helperText={
+                            fieldState.error?.message &&
+                            "Cần chọn thời gian kết thúc"
+                          }
                         />
                       )}
                     />

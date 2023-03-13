@@ -84,6 +84,7 @@ const findOneByEmailPassword = async (body) => {
         as: "staffDetails",
       },
     ],
+    attributes: { exclude: ["password"] },
   });
   return data;
 };
@@ -136,7 +137,19 @@ const deleteAccount = async (id) => {
 
 //get single account
 const getAccount = async (id) => {
-  const data = await Account.findByPk(id);
+  const data = await Account.findByPk(id, {
+    include: [
+      {
+        model: Patient,
+        as: "patientDetails",
+      },
+      {
+        model: Staff,
+        as: "staffDetails",
+      },
+    ],
+    attributes: { exclude: ["password"] },
+  });
   return data;
 };
 

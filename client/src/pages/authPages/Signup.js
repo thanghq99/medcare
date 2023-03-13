@@ -21,7 +21,7 @@ import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 
-import axios from "./../../api/axios";
+import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate } from "react-router-dom";
 
 const schema = Joi.object({
@@ -81,7 +81,8 @@ function Signup() {
     console.log("submit data", submitData);
 
     try {
-      const result = await axios.post("account", submitData);
+      console.log("try sign up");
+      const result = await axios.post("authentication/register", submitData);
       console.log("signed up", result);
       navigate("/auth/dang-nhap");
     } catch (error) {
@@ -328,16 +329,16 @@ function Signup() {
                 </Grid>
               </Grid>
             </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, p: 2 }}
-              onClick={handleSubmit(onSubmit)}
-            >
-              Đăng ký
-            </Button>
           </form>
+          <Button
+            // type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, p: 2 }}
+            onClick={handleSubmit(onSubmit)}
+          >
+            Đăng ký
+          </Button>
         </Box>
       </Grid>
       <Grid item xs={5}>

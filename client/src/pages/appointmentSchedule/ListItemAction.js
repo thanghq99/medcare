@@ -1,12 +1,14 @@
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AppointmentEditForm from "./AppointmentEditForm";
 import DoctorNoteForm from "./DoctorNoteForm";
 import AppointmentDecider from "./AppointmentDecider";
 import ExaminationForm from "./ExaminationForm";
+import ViewAndEditMedicine from "./ViewAndEditMedicine";
+import ViewAndEditSubclinical from "./ViewAndEditSubclinicals";
+import { Popover } from "@mui/material";
 // import axios from "../../api/axios";
 
 function ListItemAction({ appointmentData, triggerReFetch }) {
@@ -24,11 +26,14 @@ function ListItemAction({ appointmentData, triggerReFetch }) {
       <IconButton onClick={handleClick}>
         <MoreVertIcon></MoreVertIcon>
       </IconButton>
-      <Menu
+      <Popover
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        MenuListProps={{ onKeyDown: (e) => e.stopPropagation() }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
       >
         <AppointmentEditForm
           appointment={appointmentData}
@@ -46,7 +51,15 @@ function ListItemAction({ appointmentData, triggerReFetch }) {
           appointment={appointmentData}
           triggerReFetch={triggerReFetch}
         />
-      </Menu>
+        <ViewAndEditMedicine
+          appointment={appointmentData}
+          triggerReFetch={triggerReFetch}
+        />
+        <ViewAndEditSubclinical
+          appointment={appointmentData}
+          triggerReFetch={triggerReFetch}
+        />
+      </Popover>
     </>
   );
 }
