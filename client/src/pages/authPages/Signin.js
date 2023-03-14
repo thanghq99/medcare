@@ -16,6 +16,8 @@ import { useNavigate, redirect } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 
+import { toast } from "react-toastify";
+
 const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -47,9 +49,15 @@ function Signin() {
       const result = await axios.post("authentication/login", data);
       console.log(result.data.data);
       login(result.data.data.user, result.data.data.accessToken);
+      toast.success("Đăng nhập thành công!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       console.log("signed in");
     } catch (error) {
       console.log("cant sign in", error);
+      if (error.response.status === 401)
+        toast.error("Email hoặc mật khẩu không chính xác!");
+      else toast.error("Có lỗi xảy ra!");
     }
   };
   return (

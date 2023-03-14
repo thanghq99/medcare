@@ -8,6 +8,7 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 
 import axios from "../../../api/axios";
 import EditPatientForm from "./EditPatientForm";
+import { toast } from "react-toastify";
 
 function ListItemAction({ patientData, triggerReFetch }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,10 +31,12 @@ function ListItemAction({ patientData, triggerReFetch }) {
       });
       console.log(!isDisabled);
       console.log("status updated", result);
+      toast.success("Đã cập nhật trạng thái tài khoản!");
       handleClose();
       triggerReFetch();
     } catch (error) {
       console.log(error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

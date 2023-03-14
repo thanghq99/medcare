@@ -17,6 +17,8 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 import { Stack } from "@mui/system";
 
+import { toast } from "react-toastify";
+
 const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -50,10 +52,16 @@ function ChangePassword() {
   const onSubmit = async (data) => {
     try {
       const result = await axios.post("authentication/change-password", data);
-      navigate("/auth/dang-nhap");
       console.log("password changed");
+      toast.success("Đổi mật khẩu thành công!");
+      navigate("/auth/dang-nhap");
     } catch (error) {
       console.log("cant change password ", error);
+      if (error.response.status === 400)
+        toast.error("Mật khẩu nhập lại không chính xác!");
+      else if (error.response.status === 401)
+        toast.error("Email hoặc mật khẩu không chính xác!");
+      else toast.error("Có lỗi xảy ra!");
     }
   };
   return (

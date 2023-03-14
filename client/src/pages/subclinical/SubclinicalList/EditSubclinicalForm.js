@@ -20,6 +20,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -48,10 +49,12 @@ function CreateSubclinicalForm({ subclinical, triggerReFetch }) {
     try {
       const result = await axios.put(`subclinical/${subclinical.id}`, data);
       console.log("subclinical updated", result);
+      toast.success("Cận lâm sàng chỉnh sửa thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant update subclinical", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

@@ -17,6 +17,7 @@ import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 import AlertDialog from "../../components/AlertModal";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   doctorNote: Joi.string().required().allow(""),
@@ -45,10 +46,12 @@ function AppointmentEditForm({ appointment, triggerReFetch }) {
     try {
       const result = await axios.put(`/record/${appointment.id}`, getValues());
       console.log("added note to appointment", result);
+      toast.success("Đã gửi lời nhắn!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant add note to appointment", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

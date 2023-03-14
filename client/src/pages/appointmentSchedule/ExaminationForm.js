@@ -18,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AlertDialog from "../../components/AlertModal";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   clinicalInformation: Joi.string().required(),
@@ -76,10 +77,12 @@ function ExaminationForm({ appointment, triggerReFetch }) {
       console.log(submitData);
       const result = await axios.put(`/record/${appointment.id}`, submitData);
       console.log("updated appointment", result);
+      toast.success("Hoàn thành khám bệnh!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant update appointment", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

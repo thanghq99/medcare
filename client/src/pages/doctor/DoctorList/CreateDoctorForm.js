@@ -33,6 +33,8 @@ import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
 
+import { toast } from "react-toastify";
+
 const schema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
@@ -98,10 +100,12 @@ function CreateDoctorForm({ specialtyList, degreeList, triggerReFetch }) {
     try {
       const result = await axios.post("account", submitData);
       console.log("staff created", result);
+      toast.success("Tài khoản bác sĩ tạo thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create staff", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

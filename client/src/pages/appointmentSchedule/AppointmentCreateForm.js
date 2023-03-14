@@ -27,6 +27,7 @@ import {
   getAvailableTimes,
 } from "../../utils/someDateGetters";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   staffId: Joi.number().required(),
@@ -174,10 +175,12 @@ function AppointmentCreateForm({ triggerReFetch }) {
     try {
       const result = await axios.post("/record", getValues());
       console.log("created appointment", result);
+      toast.success("Đặt lịch hẹn khám thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create appointment", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

@@ -23,6 +23,7 @@ import axios from "../../../api/axios";
 import { getDayjsDate } from "../../../utils/timePickerFormatter";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   startTime: Joi.string().required(),
@@ -58,11 +59,13 @@ function CreateShiftForm({ shift, triggerReFetch, handleCloseMenu }) {
     try {
       const result = await axios.put(`shift/${shift.id}`, data);
       console.log("shift updated", result);
+      toast.success("Ca làm việc chỉnh sửa thành công!");
       triggerReFetch();
       handleClose();
       handleCloseMenu();
     } catch (error) {
       console.log("cant update shift", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
       handleCloseMenu();
     }

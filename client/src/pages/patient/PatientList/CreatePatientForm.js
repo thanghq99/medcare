@@ -29,6 +29,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -91,10 +92,12 @@ function CreatePatientForm({ triggerReFetch }) {
     try {
       const result = await axios.post("account", submitData);
       console.log("patient created", result);
+      toast.success("Tài khoản bệnh nhân tạo thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create staff", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

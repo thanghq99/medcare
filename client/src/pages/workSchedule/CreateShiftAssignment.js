@@ -26,6 +26,8 @@ import axios from "../../api/axios";
 import WeekSelector from "./WeekSelector";
 import AlertDialog from "../../components/AlertModal";
 import SelectMultipleDate from "./SelectMultipleDate";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 const schema = Joi.object({
   dateList: Joi.array().min(1).items(Joi.date()).required(),
@@ -94,10 +96,18 @@ function CreateShiftAssignment({ triggerReFetch }) {
     try {
       const result = await axios.post("/shift-assignment", data);
       console.log("shift assignment created", result);
+      toast.success("Phân công lịch làm việc thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create shift assignment", error);
+      if (error.response.status === 409) {
+        toast.error(
+          `Trùng thời gian làm việc trong ngày ${dayjs(
+            error.response.data.data.conflictDate
+          ).format("DD/MM/YYYY")}!`
+        );
+      } else toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

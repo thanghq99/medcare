@@ -17,6 +17,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -44,11 +45,13 @@ function CreateMedicineForm({ triggerReFetch }) {
 
     try {
       const result = await axios.post("medicine", data);
+      toast.success("Thuốc tạo thành công!");
       console.log("medicine created", result);
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create medicine", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

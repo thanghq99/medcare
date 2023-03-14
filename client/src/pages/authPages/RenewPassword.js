@@ -14,6 +14,8 @@ import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import { toast } from "react-toastify";
+
 const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -43,9 +45,13 @@ function RenewPassword() {
     try {
       const result = await axios.post("authentication/renew-password", data);
       console.log("renewed password", result);
+      toast.success("Mật khẩu mới đã được gửi về email của bạn!");
       setSuccess(true);
     } catch (error) {
       console.log("cant renew password", error);
+      if (error.response.status === 404)
+        toast.error("Không tìm thấy tài khoản với email này!");
+      else toast.error("Có lỗi xảy ra!");
     }
   };
   return (

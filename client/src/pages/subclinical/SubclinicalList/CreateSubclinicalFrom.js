@@ -18,6 +18,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -49,10 +50,12 @@ function CreateSubclinicalForm({ triggerReFetch }) {
       data.examinationFee = parseInt(data.examinationFee);
       const result = await axios.post("subclinical", data);
       console.log("subclinical created", result);
+      toast.success("Cận lâm sàng tạo thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant create subclinical", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

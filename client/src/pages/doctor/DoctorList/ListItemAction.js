@@ -7,6 +7,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import EditDoctorForm from "./EditDoctorForm";
 import axios from "../../../api/axios";
+import { toast } from "react-toastify";
 
 function ListItemAction({
   staffData,
@@ -29,12 +30,14 @@ function ListItemAction({
         `account/${staffData.account.id}/toggleIsDisabled`,
         { isDisabled: !staffData.account.isDisabled }
       );
+      toast.success("Đã cập nhật trạng thái tài khoản!");
       console.log(!staffData.account.isDisabled);
       console.log("status updated", result);
       handleClose();
       triggerReFetch();
     } catch (error) {
       console.log(error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

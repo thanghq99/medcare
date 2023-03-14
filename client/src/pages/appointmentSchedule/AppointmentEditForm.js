@@ -27,6 +27,7 @@ import {
   getAvailableTimes,
 } from "../../utils/someDateGetters";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   appointmentDate: Joi.date().required(),
@@ -101,10 +102,12 @@ function AppointmentEditForm({ appointment, triggerReFetch }) {
     try {
       const result = await axios.put(`/record/${appointment.id}`, getValues());
       console.log("updated appointment", result);
+      toast.success("Chỉnh sửa lịch hẹn khám thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant update appointment", error);
+      toast.success("Có lỗi xảy ra!");
       handleClose();
     }
   };

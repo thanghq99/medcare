@@ -33,6 +33,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -104,9 +105,11 @@ function EditDoctorForm({
     try {
       const result = await axios.put(`staff/${id}`, submitData);
       console.log("staff updated", result);
+      toast.success("Tài khoản bác sĩ cập nhật thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
+      toast.error("Có lỗi xảy ra!");
       console.log("cant create staff", error);
       handleClose();
     }

@@ -24,6 +24,8 @@ import Joi from "joi";
 import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 const schema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
@@ -84,9 +86,13 @@ function Signup() {
       console.log("try sign up");
       const result = await axios.post("authentication/register", submitData);
       console.log("signed up", result);
+      toast.success("Đăng ký tài khoản thành công!");
       navigate("/auth/dang-nhap");
     } catch (error) {
       console.log("cant sign up", error);
+      if (error.response.status === 409)
+        toast.error("Email này đã được sử dụng!");
+      else toast.error("Có lỗi xảy ra!");
     }
   };
 

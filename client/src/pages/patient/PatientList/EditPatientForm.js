@@ -32,6 +32,7 @@ import Joi from "joi";
 import axios from "../../../api/axios";
 
 import AlertDialog from "../../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -88,10 +89,12 @@ function EditPatientForm({ patientData, triggerReFetch }) {
     try {
       const result = await axios.put(`patient/${id}`, submitData);
       console.log("patient updated", result);
+      toast.success("Tài khoản bệnh nhân chỉnh sửa thành công!");
       triggerReFetch();
       handleClose();
     } catch (error) {
       console.log("cant update patient", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };
