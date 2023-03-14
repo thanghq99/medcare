@@ -28,6 +28,7 @@ function AppointmentList({
   appointmentCount,
   setValue,
 }) {
+  console.log(appointmentList);
   const emptyRows =
     page >= 1 ? Math.max(0, page * pageSize - appointmentCount) : 0;
   return (
@@ -44,18 +45,23 @@ function AppointmentList({
                 }}
               >
                 <TableCell>
-                  {a.patient.account.firstName +
+                  {a.patient?.account.firstName +
                     " " +
-                    a.patient.account.lastName}
+                    a.patient?.account.lastName}
                 </TableCell>
                 <TableCell>
-                  {a.staff.account.firstName + " " + a.staff.account.lastName}
+                  {a.staff !== null
+                    ? a.staff?.account.firstName +
+                      " " +
+                      a.staff?.account.lastName
+                    : "Chưa có"}
                 </TableCell>
                 <TableCell>{a.appointmentDate}</TableCell>
                 <TableCell>{a.appointmentTime.slice(0, 5)}</TableCell>
-                <TableCell>{a.specialty.name}</TableCell>
-                <TableCell>{a.doctorNote}</TableCell>
-                <TableCell>{a.reason}</TableCell>
+                <TableCell>{a.specialty?.name || "Chưa có"}</TableCell>
+                {/* <TableCell>{a.doctorNote}</TableCell>
+                <TableCell>{a.reason}</TableCell> */}
+                <TableCell>{a.currentExaminationFee}</TableCell>
                 <TableCell width="100px">
                   {statusChips[`${a.status}`]}
                 </TableCell>

@@ -78,4 +78,5 @@ export {
   getAllDatesInOneMonthFromCurrentDate,
   getAvailableDates,
   getAvailableTimes,
+  getAvailableTimesOfEachShiftAssignment,
 };

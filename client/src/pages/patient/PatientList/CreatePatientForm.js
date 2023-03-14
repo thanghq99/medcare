@@ -241,7 +241,7 @@ function CreatePatientForm({ triggerReFetch }) {
                         label="Email"
                         error={!!fieldState.error}
                         helperText={
-                          fieldState.error?.message &
+                          fieldState.error?.message &&
                           "Cần nhập email đúng định dạng"
                         }
                       />

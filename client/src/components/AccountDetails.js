@@ -36,6 +36,7 @@ import AlertDialog from "./AlertModal";
 
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -55,7 +56,7 @@ function AccountDetails() {
   dayjs.extend(utc);
   const navigate = useNavigate();
 
-  const { user, updateAccountDetails } = useAuth();
+  const { user, updateAccountDetails, logout } = useAuth();
   const [open, setOpen] = React.useState(false);
 
   const { fullDetails } = user;
@@ -91,11 +92,18 @@ function AccountDetails() {
       const result = await axios.put(`account/${user.id}`, submitData);
       const newAccountDetails = await axios.get(`account/${user.id}`);
       updateAccountDetails(newAccountDetails.data.data);
+      toast.success("Cập nhật thông tin cá nhân thành công!");
       navigate(0);
     } catch (error) {
       console.log("cant update account", error);
+      toast.error("Có lỗi xảy ra!");
       handleClose();
     }
+  };
+
+  const navigateToChangePasswordPage = () => {
+    logout();
+    navigate("/auth/doi-mat-khau");
   };
 
   const handleOpen = () => {
@@ -250,7 +258,20 @@ function AccountDetails() {
                     )}
                   />
                 </Grid>
-                <Grid item xs={6}></Grid>
+                <Grid
+                  item
+                  xs={6}
+                  alignItems="stretch"
+                  style={{ display: "flex" }}
+                >
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={navigateToChangePasswordPage}
+                  >
+                    Đổi mật khẩu
+                  </Button>
+                </Grid>
               </Grid>
             </Box>
             <Box>

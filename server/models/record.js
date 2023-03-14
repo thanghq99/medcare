@@ -30,10 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
       Record.belongsToMany(models.Medicine, {
-        through: models.RecordMedicine,
+        foreignKey: "recordId",
+        through: { model: models.RecordMedicine, unique: false },
       });
       Record.belongsToMany(models.Subclinical, {
-        through: models.RecordSubclinical,
+        foreignKey: "recordId",
+        through: { model: models.RecordSubclinical, unique: false },
       });
     }
   }
@@ -110,6 +112,11 @@ module.exports = (sequelize, DataTypes) => {
       treatmentDirection: {
         type: DataTypes.STRING,
         defaultValue: "",
+      },
+      currentExaminationFee: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
     },
     {

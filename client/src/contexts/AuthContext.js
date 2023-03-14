@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 import roles from "../utils/roles";
 
 const AuthContext = createContext(null);
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     // localStorage.clear();
+    toast.info("Đã đăng xuất!");
     localStorage.removeItem("user");
     localStorage.removeItem("accessToken");
     setUser({});

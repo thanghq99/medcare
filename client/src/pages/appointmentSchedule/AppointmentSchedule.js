@@ -5,12 +5,20 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-import { Button, TextField, Grid, Paper, Autocomplete } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Grid,
+  Paper,
+  Autocomplete,
+  Stack,
+} from "@mui/material";
 
 import axios from "../../api/axios";
 import PageHeader from "../../components/PageHeader";
 import AppointmentList from "./AppointmentList";
 import AppointmentCreateForm from "./AppointmentCreateForm";
+import AppointmentCreateFormByDateTime from "./AppointmentCreateFormByDateTime";
 import useAuth from "../../hooks/useAuth";
 
 function AppointmentSchedule() {
@@ -167,7 +175,12 @@ function AppointmentSchedule() {
           title="Lịch hẹn"
           action={
             user.isStaff === false ? (
-              <AppointmentCreateForm triggerReFetch={triggerReFetch} />
+              <Stack direction="row" spacing={1}>
+                <AppointmentCreateForm triggerReFetch={triggerReFetch} />
+                <AppointmentCreateFormByDateTime
+                  triggerReFetch={triggerReFetch}
+                />
+              </Stack>
             ) : null
           }
         />
@@ -291,8 +304,8 @@ function AppointmentSchedule() {
                       <DatePicker
                         {...field}
                         label="Ngày"
-                        openTo="year"
-                        views={["year", "month", "day"]}
+                        // openTo="year"
+                        // views={["year", "month", "day"]}
                         onChange={(e) => {
                           field.onChange(e.format("YYYY-MM-DD"));
                         }}

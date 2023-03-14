@@ -63,7 +63,11 @@ function CreateShiftFrom({ triggerReFetch }) {
       handleClose();
     } catch (error) {
       console.log("cant create shift", error);
-      toast.error("Có lỗi xảy ra!");
+      if (error.response.status === 400)
+        toast.error("Thời gian kết thúc phải lớn hơn thời gian bắt đầu!");
+      else if (error.response.status === 409)
+        toast.error("Ca làm việc với thời gian này đã tồn tại!");
+      else toast.error("Có lỗi xảy ra!");
       handleClose();
     }
   };

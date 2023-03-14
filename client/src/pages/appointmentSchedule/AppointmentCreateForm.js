@@ -36,6 +36,7 @@ const schema = Joi.object({
   appointmentDate: Joi.date().required(),
   appointmentTime: Joi.string().required(),
   reason: Joi.string().required(),
+  currentExaminationFee: Joi.number().required(),
 });
 
 function AppointmentCreateForm({ triggerReFetch }) {
@@ -69,6 +70,7 @@ function AppointmentCreateForm({ triggerReFetch }) {
       appointmentDate: "",
       appointmentTime: "",
       reason: "",
+      currentExaminationFee: 0,
     },
     resolver: joiResolver(schema),
   });
@@ -204,12 +206,12 @@ function AppointmentCreateForm({ triggerReFetch }) {
   return (
     <>
       <Button variant="contained" onClick={handleOpen}>
-        Đặt lịch hẹn
+        Đặt lịch hẹn theo bác sĩ
       </Button>
       <Dialog disableEscapeKeyDown fullWidth maxWidth="md" open={open}>
         <DialogTitle>
           <Typography variant="h5" component="p">
-            Đặt lịch hẹn
+            Đặt lịch hẹn theo bác sĩ
           </Typography>
         </DialogTitle>
         <DialogContent>
@@ -261,6 +263,10 @@ function AppointmentCreateForm({ triggerReFetch }) {
                   onChange={(event, newValue) => {
                     setStaffId(newValue);
                     setValue("staffId", newValue === null ? null : newValue.id);
+                    setValue(
+                      "currentExaminationFee",
+                      newValue === null ? 0 : newValue.examinationFee
+                    );
                   }}
                   getOptionLabel={(option) =>
                     `${option.account.firstName} ${option.account.lastName}`

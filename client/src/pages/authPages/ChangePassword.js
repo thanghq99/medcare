@@ -165,6 +165,14 @@ function ChangePassword() {
                   Quên mật khẩu
                 </Button>
               </Grid>
+              <Grid item>
+                <Button
+                  variant="text"
+                  onClick={() => navigate("/auth/dang-nhap")}
+                >
+                  Đăng nhập
+                </Button>
+              </Grid>
             </Grid>
           </form>
         </Box>

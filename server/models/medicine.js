@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Medicine.belongsToMany(models.Record, {
-        foreignKey: "recordId",
-        through: models.RecordMedicine,
+        foreignKey: "medicineId",
+        through: { model: models.RecordMedicine, unique: false },
       });
     }
   }

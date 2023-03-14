@@ -25,26 +25,31 @@ router.get("/", (req, res) => {
 });
 
 router.get("/init-db", async (req, res) => {
-  await db.sequelize.sync({ force: true });
-  await newAccount({
-    firstName: "admin",
-    lastName: "admin",
-    email: "haikhauak@gmail.com",
-    password: "123",
-    phoneNumber: "0111222333",
-    dob: "1999/04/02",
-    gender: "M",
-    address: "",
-    isStaff: true,
-    isDisabled: false,
-    degreeId: null,
-    specialtyId: null,
-    examinationFee: 0,
-    isAdmin: true,
-    healthHistory: "",
-    familyHealthHistory: "",
-  });
-  res.json("DB initialized with one admin account");
+  try {
+    await db.sequelize.sync({ force: true });
+    await newAccount({
+      firstName: "admin",
+      lastName: "admin",
+      email: "haikhauak@gmail.com",
+      password: "123",
+      phoneNumber: "0111222333",
+      dob: "1999/04/02",
+      gender: "M",
+      address: "",
+      isStaff: true,
+      isDisabled: false,
+      degreeId: null,
+      specialtyId: null,
+      examinationFee: 0,
+      isAdmin: true,
+      healthHistory: "",
+      familyHealthHistory: "",
+    });
+    res.status(200).json("DB initialized with one admin account");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
 });
 
 // router.use("/demo", demoRoute);

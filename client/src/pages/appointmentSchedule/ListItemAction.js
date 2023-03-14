@@ -9,6 +9,9 @@ import ExaminationForm from "./ExaminationForm";
 import ViewAndEditMedicine from "./ViewAndEditMedicine";
 import ViewAndEditSubclinical from "./ViewAndEditSubclinicals";
 import { Popover } from "@mui/material";
+import AppointmentEditFormWithoutDoctor from "./AppointmentEditFormWithoutDoctor";
+import CoordinatingAppointment from "./CoordinatingAppointment";
+import AppointmentDetails from "./AppointmentDetails";
 // import axios from "../../api/axios";
 
 function ListItemAction({ appointmentData, triggerReFetch }) {
@@ -35,10 +38,23 @@ function ListItemAction({ appointmentData, triggerReFetch }) {
           horizontal: "left",
         }}
       >
-        <AppointmentEditForm
+        <AppointmentDetails appointment={appointmentData} />
+        <CoordinatingAppointment
           appointment={appointmentData}
           triggerReFetch={triggerReFetch}
         />
+        {appointmentData.staff !== null ||
+        appointmentData.specialty !== null ? (
+          <AppointmentEditForm
+            appointment={appointmentData}
+            triggerReFetch={triggerReFetch}
+          />
+        ) : (
+          <AppointmentEditFormWithoutDoctor
+            appointment={appointmentData}
+            triggerReFetch={triggerReFetch}
+          />
+        )}
         <ExaminationForm
           appointment={appointmentData}
           triggerReFetch={triggerReFetch}

@@ -67,6 +67,7 @@ const newRecord = async (req, res, next) => {
       appointmentDate,
       appointmentTime,
       reason,
+      currentExaminationFee,
     } = req.body;
     const data = await RecordService.newRecord(
       staffId,
@@ -74,7 +75,8 @@ const newRecord = async (req, res, next) => {
       specialtyId,
       appointmentDate,
       appointmentTime,
-      reason
+      reason,
+      currentExaminationFee
     );
     res.status(StatusCodes.CREATED).json({
       code: StatusCodes.CREATED,

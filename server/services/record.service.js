@@ -139,7 +139,8 @@ const newRecord = async (
   specialtyId,
   appointmentDate,
   appointmentTime,
-  reason
+  reason,
+  currentExaminationFee
 ) => {
   const data = await Record.create({
     staffId: staffId,
@@ -148,6 +149,7 @@ const newRecord = async (
     appointmentDate: appointmentDate,
     appointmentTime: appointmentTime,
     reason: reason,
+    currentExaminationFee: currentExaminationFee,
   });
   return data;
 };

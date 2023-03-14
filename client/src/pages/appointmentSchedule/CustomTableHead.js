@@ -22,13 +22,17 @@ const cols = [
     name: "Chuyên khoa",
     numeric: false,
   },
+  // {
+  //   name: "Lời nhắn của bác sĩ",
+  //   numeric: false,
+  // },
+  // {
+  //   name: "Lý do khám",
+  //   numeric: false,
+  // },
   {
-    name: "Lời nhắn của bác sĩ",
-    numeric: false,
-  },
-  {
-    name: "Lý do khám",
-    numeric: false,
+    name: "Giá khám",
+    numeric: true,
   },
   {
     name: "Trạng thái",

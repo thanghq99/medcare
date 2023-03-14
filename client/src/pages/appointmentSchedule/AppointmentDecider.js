@@ -15,7 +15,6 @@ function AppointmentDecider({ appointment, triggerReFetch }) {
         status: decision,
       });
       console.log(`chọn ${decision}`, result);
-      toast.success("Chỉnh sửa lịch hẹn khám thành công!");
       if (decision === "accepted") toast.success("Chấp nhận lịch khám!");
       if (decision === "canceled") toast.success("Hủy lịch khám!");
       triggerReFetch();
