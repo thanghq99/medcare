@@ -6,6 +6,7 @@ import Groups3Icon from "@mui/icons-material/Groups3";
 import MedicationIcon from "@mui/icons-material/Medication";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 const navConfig = [
   {
@@ -44,6 +45,13 @@ const navConfig = [
     title: "Chuyên khoa",
     path: "/chuyen-khoa",
     icon: <Groups3Icon />,
+    isStaff: true,
+    isAdmin: true,
+  },
+  {
+    title: "Bằng cấp",
+    path: "/bang-cap",
+    icon: <BadgeIcon />,
     isStaff: true,
     isAdmin: true,
   },

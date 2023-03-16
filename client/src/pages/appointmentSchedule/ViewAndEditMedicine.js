@@ -158,7 +158,7 @@ function ViewAndEditMedicine({ appointment, triggerReFetch }) {
                 Chỉ định thuốc
               </Typography>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ minHeight: "20vh" }}>
               <Grid
                 container
                 spacing={1}

@@ -6,6 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditSpecialtyForm from "./EditSpecialtyForm";
 import axios from "../../../api/axios";
+import { Popover } from "@mui/material";
 
 function ListItemAction({ specialty, triggerReFetch }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +35,7 @@ function ListItemAction({ specialty, triggerReFetch }) {
       <IconButton onClick={handleClick}>
         <MoreVertIcon></MoreVertIcon>
       </IconButton>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Popover anchorEl={anchorEl} open={open} onClose={handleClose}>
         <EditSpecialtyForm
           specialty={specialty}
           triggerReFetch={triggerReFetch}
@@ -43,7 +44,7 @@ function ListItemAction({ specialty, triggerReFetch }) {
         <MenuItem disableRipple dense onClick={deleteSpecialty}>
           <DeleteForeverIcon color="error" sx={{ mr: 2 }} /> Xóa
         </MenuItem>
-      </Menu>
+      </Popover>
     </>
   );
 }

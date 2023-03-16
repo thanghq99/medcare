@@ -143,7 +143,7 @@ function ViewAndEditSubclinical({ appointment, triggerReFetch }) {
                 Chỉ định cận lâm sàng
               </Typography>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ minHeight: "20vh" }}>
               <Grid
                 container
                 spacing={1}

@@ -4,11 +4,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditSubclinicalForm from "./EditSubclinicalForm";
+import EditDegreeForm from "./EditDegreeForm";
 import axios from "../../../api/axios";
 import { Popover } from "@mui/material";
 
-function ListItemAction({ subclinical, triggerReFetch }) {
+function ListItemAction({ degree, triggerReFetch }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,10 +18,10 @@ function ListItemAction({ subclinical, triggerReFetch }) {
     setAnchorEl(null);
   };
 
-  const deleteSubclinical = async () => {
+  const deleteDegree = async () => {
     try {
-      const result = await axios.delete(`subclinical/${subclinical.id}`);
-      console.log("subclinical deleted", result);
+      const result = await axios.delete(`degree/${degree.id}`);
+      console.log("degree deleted", result);
       handleClose();
       triggerReFetch();
     } catch (error) {
@@ -36,12 +36,9 @@ function ListItemAction({ subclinical, triggerReFetch }) {
         <MoreVertIcon></MoreVertIcon>
       </IconButton>
       <Popover anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <EditSubclinicalForm
-          subclinical={subclinical}
-          triggerReFetch={triggerReFetch}
-        />
+        <EditDegreeForm degree={degree} triggerReFetch={triggerReFetch} />
 
-        <MenuItem disableRipple dense onClick={deleteSubclinical}>
+        <MenuItem disableRipple dense onClick={deleteDegree}>
           <DeleteForeverIcon color="error" sx={{ mr: 2 }} /> Xóa
         </MenuItem>
       </Popover>

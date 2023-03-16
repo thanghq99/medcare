@@ -8,6 +8,7 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import EditDoctorForm from "./EditDoctorForm";
 import axios from "../../../api/axios";
 import { toast } from "react-toastify";
+import { Popover } from "@mui/material";
 
 function ListItemAction({
   staffData,
@@ -47,7 +48,7 @@ function ListItemAction({
       <IconButton onClick={handleClick}>
         <MoreVertIcon></MoreVertIcon>
       </IconButton>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Popover anchorEl={anchorEl} open={open} onClose={handleClose}>
         <EditDoctorForm
           staffData={staffData}
           triggerReFetch={triggerReFetch}
@@ -64,7 +65,7 @@ function ListItemAction({
             Cho nghỉ việc
           </MenuItem>
         )}
-      </Menu>
+      </Popover>
     </>
   );
 }

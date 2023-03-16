@@ -7,6 +7,7 @@ import AppointmentSchedule from "./pages/appointmentSchedule/AppointmentSchedule
 import DoctorList from "./pages/doctor/DoctorList/DoctorList";
 import PatientList from "./pages/patient/PatientList/PatientList";
 import SpecialtyList from "./pages/specialty/SpecialyList/SpecialtyList";
+import DegreeList from "./pages/degree/DegreeList/DegreeList";
 import MedicineList from "./pages/medicine/MecicineList/MedicineList";
 import SubclinicalList from "./pages/subclinical/SubclinicalList/SubclinicalList";
 import ShiftList from "./pages/shift/ShiftList/ShiftList";
@@ -66,6 +67,10 @@ const Router = () => {
         {
           path: "chuyen-khoa",
           element: isAdmin(user) ? <SpecialtyList /> : <ErrorPage />,
+        },
+        {
+          path: "bang-cap",
+          element: isAdmin(user) ? <DegreeList /> : <ErrorPage />,
         },
         {
           path: "ca-lam-viec",
