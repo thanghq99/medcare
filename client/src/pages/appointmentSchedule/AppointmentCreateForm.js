@@ -271,6 +271,22 @@ function AppointmentCreateForm({ triggerReFetch }) {
                   getOptionLabel={(option) =>
                     `${option.account.firstName} ${option.account.lastName}`
                   }
+                  renderOption={(props, option) => (
+                    <span
+                      {...props}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "start",
+                      }}
+                    >
+                      <span>
+                        {option.degree !== null ? option.degree.name : ""}{" "}
+                        {option.account.firstName} {option.account.lastName}
+                      </span>
+                      <span>Giá: {option.examinationFee} VND</span>
+                    </span>
+                  )}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }

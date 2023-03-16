@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import {
   Autocomplete,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -274,6 +275,22 @@ function CoordinatingAppointment({ appointment, triggerReFetch }) {
                     getOptionLabel={(option) =>
                       `${option.account.firstName} ${option.account.lastName}`
                     }
+                    renderOption={(props, option) => (
+                      <span
+                        {...props}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "start",
+                        }}
+                      >
+                        <span>
+                          {option.degree !== null ? option.degree.name : ""}{" "}
+                          {option.account.firstName} {option.account.lastName}
+                        </span>
+                        <span>Giá: {option.examinationFee} VND</span>
+                      </span>
+                    )}
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }
@@ -375,7 +392,7 @@ function CoordinatingAppointment({ appointment, triggerReFetch }) {
               <Button onClick={handleClose}>Hủy</Button>
             )}
             <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-              Gửi
+              Điều phối
             </Button>
           </DialogActions>
         </Dialog>
