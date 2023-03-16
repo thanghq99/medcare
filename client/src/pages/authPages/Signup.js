@@ -12,6 +12,9 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { IconButton, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import BackgroundImage from "./signup-bg.jpg";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -25,6 +28,7 @@ import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const schema = Joi.object({
   firstName: Joi.string().required(),
@@ -66,6 +70,13 @@ const defaultValues = {
 function Signup() {
   dayjs.extend(utc);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const {
     control,
@@ -250,6 +261,24 @@ function Signup() {
                         {...field}
                         fullWidth
                         label="Mật khẩu"
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
                         error={!!fieldState.error}
                         helperText={
                           fieldState.error?.message &&

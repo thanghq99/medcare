@@ -3,7 +3,9 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Paper } from "@mui/material";
+import { IconButton, InputAdornment, Paper } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import BackgroundImage from "./signin-bg.jpg";
 
 import { useForm, Controller } from "react-hook-form";
@@ -14,7 +16,7 @@ import { publicAPI as axios } from "./../../api/axios";
 import { useNavigate, redirect } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
@@ -33,6 +35,13 @@ const defaultValues = {
 function Signin() {
   const navigate = useNavigate();
   const { login, logout } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const {
     control,
@@ -101,6 +110,20 @@ function Signin() {
                   {...field}
                   fullWidth
                   label="Mật khẩu"
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   error={!!fieldState.error}
                   helperText={
                     fieldState.error?.message && "Mật khẩu không được bỏ trống"
